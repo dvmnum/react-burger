@@ -1,4 +1,5 @@
 import styles from './IngredientListModule.module.css'
+import PropTypes from 'prop-types';
 
 function IngredientListModule({ title, children }) {
     return (
@@ -9,6 +10,10 @@ function IngredientListModule({ title, children }) {
             </ul>
         </div>
     )
+}
+
+IngredientListModule.propTypes = {
+    title: PropTypes.string.isRequired
 }
 
 export default IngredientListModule

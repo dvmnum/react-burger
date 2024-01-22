@@ -1,7 +1,7 @@
 import headerStyles from "./AppHeader.module.css"
 import React from 'react';
 import Link from "../Link/Link.jsx"
-import { BurgerIcon, ListIcon, ProfileIcon, Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function AppHeader() {
     const [current, setCurrent] = React.useState(true);
