@@ -1,0 +1,38 @@
+.constructor {
+    margin-top: 100px;
+
+    
+}
+
+.wrapper {
+
+}
+
+.order {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.inner {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    max-height: calc(100vh - 520px);
+    overflow-y: scroll;
+
+    scroll-snap-type: y mandatory;
+}
+
+.inner::-webkit-scrollbar {
+    width: 8px;
+}
+
+.inner::-webkit-scrollbar-track {
+    background-color: var(--background-element);
+}
+
+.inner::-webkit-scrollbar-thumb {
+    background-color: var(--text-inactive-color);
+}

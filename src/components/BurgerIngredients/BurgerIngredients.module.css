@@ -1,0 +1,19 @@
+.ingredientsList {
+    display: flex;
+    flex-direction: column;
+
+    max-height: calc(100vh - 320px);
+    overflow-y: scroll;
+}
+
+.ingredientsList::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ingredientsList::-webkit-scrollbar-track {
+    background-color: var(--background-element);
+}
+
+.ingredientsList::-webkit-scrollbar-thumb {
+    background-color: var(--text-inactive-color);
+}
