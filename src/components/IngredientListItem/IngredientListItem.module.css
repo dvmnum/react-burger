@@ -5,6 +5,8 @@
     gap: 4px;
 
     width: calc(50% - 12px);
+
+    cursor: pointer;
 }
 
 .item img {
