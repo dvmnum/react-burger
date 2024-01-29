@@ -1,8 +1,8 @@
 import styles from './Modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import ReactDOM, { createPortal } from 'react-dom';
-import React, { useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
+import { useEffect } from 'react';
 
 const modalRoot = document.getElementById("modal");
 
@@ -42,8 +42,7 @@ function Modal({ children, close, title }) {
 
 Modal.propTypes = {
     cildren: PropTypes.element,
-    visible: PropTypes.bool.isRequired,
-    close: PropTypes.bool.isRequired,
+    close: PropTypes.func.isRequired,
     title: PropTypes.string
 };
 

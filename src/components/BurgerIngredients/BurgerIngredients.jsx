@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useMemo } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerIngredients.module.css';
 import IngredientListModule from '../IngredientListModule/IngredientListModule'
@@ -7,7 +7,11 @@ import { productArrayPropTypes } from '../../utils/prop-types'
 
 
 function BurgerIngredients({ src }) {
-    const [current, setCurrent] = React.useState('buns');
+    const [current, setCurrent] = useState('buns');
+
+    const buns = useMemo(() => src.filter((product) => product.type === 'bun'), [src]);
+    const mains = useMemo(() => src.filter((product) => product.type === 'main'), [src]);
+    const sauces = useMemo(() => src.filter((product) => product.type === 'sauce'), [src]);
     
     return (
         <div className='burgerIngredients mt-10'>
@@ -19,13 +23,13 @@ function BurgerIngredients({ src }) {
             </div>
             <div className={styles.ingredientsList} >
                 <IngredientListModule title='Булки'>
-                    {src.map((product, index) => product.type === 'bun' ? <IngredientListItem key={index} data={product} /> : null )}
+                    {buns.map((product, index) => <IngredientListItem key={index} data={product} />)}
                 </IngredientListModule>
                 <IngredientListModule title='Соусы'>
-                    {src.map((product, index) => product.type === 'sauce' ? <IngredientListItem key={index} data={product} /> : null )}
+                    {sauces.map((product, index) => <IngredientListItem key={index} data={product} />)}
                 </IngredientListModule>
                 <IngredientListModule title='Начинки'>
-                    {src.map((product, index) => product.type === 'main' ? <IngredientListItem key={index} data={product} /> : null )}
+                    {mains.map((product, index) => <IngredientListItem key={index} data={product} />)}
                 </IngredientListModule>
             </div>
         </div>
