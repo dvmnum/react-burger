@@ -1,0 +1,6 @@
+.holder {
+    display: flex;
+    align-items: center;
+
+    scroll-snap-align: start;
+}
