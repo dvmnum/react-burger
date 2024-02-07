@@ -5,8 +5,15 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { productPropTypes } from '../../utils/prop-types'
 import Modal from '../Modal/Modal'
 
+import { useDrag } from 'react-dnd';
+
 function IngredientListItem({ data }) {
     const [ open, setOpen ] = useState(false)
+
+    const [, dragRef] = useDrag({
+        type: 'product',
+        item: data._id,
+    });
 
     const modal = (
         <Modal title='Детали ингредиента' close={() => setOpen(false)}>
@@ -35,7 +42,7 @@ function IngredientListItem({ data }) {
 
     return (
         <>
-            <li className={ styles.item } draggable="true" onClick={() => setOpen(true)}>
+            <li className={ styles.item } onClick={() => setOpen(true)} ref={dragRef}>
                 <img src={data.image} alt={data.name} />
                 <div style={{ display: "flex" }}>
                     <p className='text text_type_digits-default mr-2'>{data.price}</p>

@@ -1,61 +1,37 @@
-import { useState, useEffect } from 'react';
 import './App.css';
 import AppHeader from './components/AppHeader/AppHeader.jsx';
 import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients.jsx';
 import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor.jsx';
-import { NORMA_API } from './utils/burger-api'
 
-const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from './services/actions/ingredients';
 
 function App() {
-  const [ state, setState ] = useState({
-    isLoading: false,
-    hasError: false,
-    productData: []
-  })
+  const state = useSelector(state => state)
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const getProductData = async () => {
-      setState({
-        ...state,
-        hasError: false,
-        isLoading: true
-      })
-      fetch(`${NORMA_API}/ingredients`)
-        .then(checkReponse)
-        .then(data => setState({
-          ...state,
-          productData: data.data,
-          isLoading: false
-        }))
-        .catch(e => {
-          setState({
-            ...state,
-            hasError: true,
-            isLoading: false
-          });
-        });
-    };
-
-    getProductData();
-  }, [])
+    dispatch(getIngredients())
+  }, [dispatch])
 
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <AppHeader />
       <div className='container'>
         {state.isLoading && console.log('Загрузка...')}
         {state.hasError && console.log('Произошла ошибка')}
-        {!state.hasError && !state.isLoading && state.productData.length &&
-          <>
-            <BurgerIngredients src={state.productData}/>
-            <BurgerConstructor src={state.productData}/>
-          </>
+        {!state.hasError && !state.isLoading && state.ingredients.length &&
+        <>
+          <BurgerIngredients/>
+          <BurgerConstructor/>
+        </>
         }
       </div>
-    </>
+    </DndProvider>    
   );
 }
 

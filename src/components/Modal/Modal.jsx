@@ -21,7 +21,7 @@ function Modal({ children, close, title }) {
             close(true)
         }
     }
-
+    
     return createPortal(
             <div className={styles.overlay} onClick={close}>
                 <div className={styles.modal}>
