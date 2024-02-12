@@ -40,11 +40,11 @@ function Modal({ children, close, title }) {
     )
 }
 
-Modal.propTypes = {
-    cildren: PropTypes.element,
-    close: PropTypes.func.isRequired,
-    title: PropTypes.string
-};
+// Modal.propTypes = {
+//     children: PropTypes.element,
+//     close: PropTypes.func.isRequired,
+//     title: PropTypes.string
+// };
 
 
 export default Modal

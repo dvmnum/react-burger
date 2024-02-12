@@ -1,20 +1,40 @@
 import PropTypes from 'prop-types';
 
+const strRequired = PropTypes.string.isRequired
+const numRequired = PropTypes.number.isRequired
+
 const productPropTypes = PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v: PropTypes.number.isRequired
+    _id:           strRequired,
+    name:          strRequired,
+    type:          strRequired,
+    proteins:      numRequired,
+    fat:           numRequired,
+    carbohydrates: numRequired,
+    calories:      numRequired,
+    price:         numRequired,
+    image:         strRequired,
+    image_mobile:  strRequired,
+    image_large:   strRequired,
+    __v:           numRequired,
+    id:            PropTypes.string
+}).isRequired
+
+const constructorItemPropTypes = PropTypes.shape({
+    _id:           strRequired,
+    name:          strRequired,
+    type:          strRequired,
+    proteins:      numRequired,
+    fat:           numRequired,
+    carbohydrates: numRequired,
+    calories:      numRequired,
+    price:         numRequired,
+    image:         strRequired,
+    image_mobile:  strRequired,
+    image_large:   strRequired,
+    __v:           numRequired,
+    id:            PropTypes.string
 }).isRequired
 
 const productArrayPropTypes = PropTypes.arrayOf(productPropTypes).isRequired
 
-export { productArrayPropTypes, productPropTypes }
+export { productArrayPropTypes, productPropTypes, constructorItemPropTypes }

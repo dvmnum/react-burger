@@ -15,6 +15,12 @@
     margin-inline: 16px;
 }
 
+.top, .bottom {
+    display: block;
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
 .inner {
     display: flex;
     flex-direction: column;
@@ -43,7 +49,7 @@
 
 .head {
     border-radius: 88px 88px 40px 40px;
-    margin-left: 48px;
+    margin-left: 32px;
     margin-right: 16px;
 }
 
@@ -54,7 +60,7 @@
 
 .foot {
     border-radius: 40px 40px 88px 88px;
-    margin-left: 48px;
+    margin-left: 32px;
     margin-right: 16px;
 }
 
@@ -69,6 +75,4 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
-    
 }

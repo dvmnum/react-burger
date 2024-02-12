@@ -10,7 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from './services/actions/ingredients';
 
 function App() {
-  const state = useSelector(state => state)
+  const isLoading = useSelector(store => store.ingredientsReducer.isLoading)
+  const hasError = useSelector(store => store.ingredientsReducer.hasError)
+  const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
 
   const dispatch = useDispatch();
 
@@ -22,16 +24,16 @@ function App() {
     <DndProvider backend={HTML5Backend}>
       <AppHeader />
       <div className='container'>
-        {state.isLoading && console.log('Загрузка...')}
-        {state.hasError && console.log('Произошла ошибка')}
-        {!state.hasError && !state.isLoading && state.ingredients.length &&
+        {isLoading && console.log('Загрузка...')}
+        {hasError && console.log('Произошла ошибка')}
+        {!hasError && !isLoading && ingredients &&
         <>
           <BurgerIngredients/>
           <BurgerConstructor/>
         </>
         }
       </div>
-    </DndProvider>    
+    </DndProvider>
   );
 }
 
