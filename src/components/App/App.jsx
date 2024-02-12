@@ -1,13 +1,13 @@
-import './App.css';
-import AppHeader from './components/AppHeader/AppHeader.jsx';
-import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients.jsx';
-import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor.jsx';
+import AppHeader from '../AppHeader/AppHeader.jsx';
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients.jsx';
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor.jsx';
+import styles from './App.module.css'
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from './services/actions/ingredients';
+import { getIngredients } from '../../services/actions/ingredients';
 
 function App() {
   const isLoading = useSelector(store => store.ingredientsReducer.isLoading)
@@ -23,7 +23,7 @@ function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <AppHeader />
-      <div className='container'>
+      <main className={styles.container}>
         {isLoading && console.log('Загрузка...')}
         {hasError && console.log('Произошла ошибка')}
         {!hasError && !isLoading && ingredients &&
@@ -32,7 +32,7 @@ function App() {
           <BurgerConstructor/>
         </>
         }
-      </div>
+      </main>
     </DndProvider>
   );
 }

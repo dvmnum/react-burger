@@ -16,3 +16,11 @@
     width: 240px;
     display: block;
 }
+
+.listItem {
+    display: flex;
+}
+
+.name {
+    text-align: center;
+}

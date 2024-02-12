@@ -1,17 +1,14 @@
 import styles from './ConstructorItemHolder.module.css'
+import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { productArrayPropTypes, constructorItemPropTypes } from '../../utils/prop-types'
+import { productPropTypes } from '../../utils/prop-types'
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 
 function ConstructorItemHolder({ data, index, handleClose, moveCard }) {
     const { id } = data
-    const constructorIngredients = useSelector(state => state.constructorReducer.ingredients)
-    const itemIndex = constructorIngredients.indexOf(data)
 
     const ref = useRef(null);
-    const dispatch = useDispatch();
 
     const [{ handlerId }, drop] = useDrop({
         accept: 'list',
@@ -73,7 +70,10 @@ function ConstructorItemHolder({ data, index, handleClose, moveCard }) {
 }
 
 ConstructorItemHolder.propTypes = {
-    data: constructorItemPropTypes
+    data: productPropTypes,
+    index: PropTypes.number.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    moveCard: PropTypes.func.isRequired
 }
 
 export default ConstructorItemHolder

@@ -1,9 +1,10 @@
+import { productPropTypes } from '../../utils/prop-types'
 import modalStyles from '../Modal/Modal.module.css'
 
 const textMain = 'text text_type_main-default text_color_inactive'
 const textDigits = 'text text_type_digits-default text_color_inactive'
 
-export const ModalInner = ({data}) => {
+export const IngredientDetails = ({data}) => {
     return (
         <>
           <img className={modalStyles.img} src={data.image_large} alt={data.name} />
@@ -28,4 +29,8 @@ export const ModalInner = ({data}) => {
             </ul>
         </>
     )
+}
+
+IngredientDetails.propTypes = {
+    data: productPropTypes
 }

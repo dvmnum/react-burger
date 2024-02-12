@@ -1,4 +1,4 @@
-import { ADD_BUN, ADD_INGREDIENT, DELETE_INGREDIENT, CONSTRUCTOR_REORDER } from "../actions/constructor"
+import { ADD_BUN, ADD_INGREDIENT, DELETE_INGREDIENT, CONSTRUCTOR_REORDER, CLEAR_INGREDIENTS } from "../actions/constructor"
 
 const initialState = {
     bun: null,
@@ -19,6 +19,12 @@ export const constructorReducer = (state = initialState, action) => {
                 ingredients: state.ingredients.filter((ingredient) =>
                     ingredient.id !== action.payload
                 )
+            }
+        }
+        case (CLEAR_INGREDIENTS): {
+            return {
+                bun: null,
+                ingredients: []
             }
         }
         case (ADD_BUN): {

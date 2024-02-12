@@ -1,15 +1,21 @@
 import { useState, useMemo } from 'react';
-import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+
 import styles from './BurgerIngredients.module.css';
+
 import IngredientListModule from '../IngredientListModule/IngredientListModule'
 import IngredientListItem from '../IngredientListItem/IngredientListItem'
-import { productArrayPropTypes } from '../../utils/prop-types'
-import { useDispatch, useSelector } from 'react-redux';
+import { IngredientDetails } from '../Modal/IngredientDetails';
+import { REMOVE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
+import Modal from '../Modal/Modal'
 
 function BurgerIngredients() {
     const data = useSelector(state => state.ingredientsReducer.ingredients)
     const addedBun = useSelector(state => state.constructorReducer.bun)
     const addedIngredients = useSelector(state => state.constructorReducer.ingredients)
+    const ingedientDetails = useSelector(state => state.currentIngredientReducer.addedIngredient)
+    const dispatch = useDispatch()
 
     const [current, setCurrent] = useState('buns');
 
@@ -31,11 +37,21 @@ function BurgerIngredients() {
             index === 2 && elScroll < 0 && setCurrent('mains')
         })
     }
+
+    const openModal = (modalData) => {
+        dispatch({ type: SET_CURRENT_INGREDIENT, payload: modalData });
+    }
+
+    const modal = ingedientDetails && (
+        <Modal title='Детали ингредиента' action={REMOVE_CURRENT_INGREDIENT}>
+            <IngredientDetails data={ingedientDetails} />
+        </Modal>
+    )
     
     return (
-        <div className='burgerIngredients mt-10'>
+        <div className='mt-10'>
             <p className='text text_type_main-large mb-5'>Соберите бургер</p>
-            <div style={{ display: "flex" }} className='mb-10'>
+            <div className={`${styles.tabs} mb-10`}>
                 <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>Булки</Tab>
                 <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>Соусы</Tab>
                 <Tab value="mains" active={current === 'mains'} onClick={setCurrent}>Начинки</Tab>
@@ -44,40 +60,40 @@ function BurgerIngredients() {
                 <IngredientListModule title='Булки'>
                     {buns.map((product, index) =>
                         <IngredientListItem
-                            key={index}
+                            key={product._id}
                             data={product}
                             counter={addedBun && addedBun._id === product._id}
                             counterValue={2}
+                            onClick={() => openModal(product)}
                         />)
                     }
                 </IngredientListModule>
                 <IngredientListModule title='Соусы'>
                     {sauces.map((product, index) =>
                         <IngredientListItem
-                            key={index}
+                            key={product._id}
                             data={product}
                             counter={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id) ? true : false}
                             counterValue={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id).length}
+                            onClick={() => openModal(product)}
                         />)
                     }
                 </IngredientListModule>
                 <IngredientListModule title='Начинки'>
                     {mains.map((product, index) =>
                         <IngredientListItem
-                            key={index}
+                            key={product._id}
                             data={product}
                             counter={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id) ? true : false}
                             counterValue={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id).length}
+                            onClick={() => openModal(product)}
                         />)
                     }
                 </IngredientListModule>
             </div>
+            {modal}
         </div>
     );
 }
-
-// BurgerIngredients.propTypes = {
-//     data: productArrayPropTypes
-// };
 
 export default BurgerIngredients
