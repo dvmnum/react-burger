@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -42,8 +42,12 @@ function BurgerIngredients() {
         dispatch({ type: SET_CURRENT_INGREDIENT, payload: modalData });
     }
 
+    const closeModal = () => {
+        dispatch({ type: REMOVE_CURRENT_INGREDIENT })
+    }
+
     const modal = ingedientDetails && (
-        <Modal title='Детали ингредиента' action={REMOVE_CURRENT_INGREDIENT}>
+        <Modal title='Детали ингредиента' onClose={closeModal}>
             <IngredientDetails data={ingedientDetails} />
         </Modal>
     )

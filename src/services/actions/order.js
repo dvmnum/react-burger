@@ -1,7 +1,7 @@
 import { request } from "../../utils/request"
 
 export const SET_INGREDIENTS = 'ORDER_POST'; 
-export const CLEAR_INGREDIENTS = 'CLEAR_INGREDIENTS'; 
+export const CLOSE_ORDER = 'CLOSE_ORDER'; 
 export const ORDER_POST_REQUEST = 'ORDER_POST_REQUEST'; 
 export const ORDER_POST_SUCCESS = 'ORDER_POST_SUCCESS'; 
 export const ORDER_POST_FAILED = 'ORDER_POST_FAILED'; 

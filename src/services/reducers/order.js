@@ -1,4 +1,4 @@
-import { SET_INGREDIENTS, ORDER_POST_REQUEST, ORDER_POST_SUCCESS, ORDER_POST_FAILED, CLEAR_INGREDIENTS } from "../actions/order"
+import { SET_INGREDIENTS, ORDER_POST_REQUEST, ORDER_POST_SUCCESS, ORDER_POST_FAILED, CLOSE_ORDER } from "../actions/order"
 
 const inititalState = {
     ingredients: [],
@@ -15,7 +15,7 @@ export const orderReducer = (state = inititalState, action) => {
                 ingredients: action.payload
             }
         }
-        case CLEAR_INGREDIENTS: {
+        case CLOSE_ORDER: {
             return {
                 ...state,
                 answer: {}

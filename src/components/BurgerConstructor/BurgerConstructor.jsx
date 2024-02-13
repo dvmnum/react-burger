@@ -7,12 +7,12 @@ import ConstructorItemHolder from '../ConstructorItemHolder/ConstructorItemHolde
 import Modal from '../Modal/Modal'
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { ADD_BUN, ADD_INGREDIENT, CONSTRUCTOR_REORDER, DELETE_INGREDIENT } from '../../services/actions/constructor';
+import { ADD_BUN, ADD_INGREDIENT, CONSTRUCTOR_REORDER, DELETE_INGREDIENT, CLEAR_INGREDIENTS } from '../../services/actions/constructor';
 
 import { v4 as uuid } from 'uuid';
 import PulseLoader from "react-spinners/PulseLoader";
 import { sendOrder, setValue } from '../../services/actions/order';
-import { CLEAR_INGREDIENTS } from '../../services/actions/order';
+import { CLOSE_ORDER } from '../../services/actions/order';
 import { OrderDetails } from '../Modal/OrderDetails';
 
 function BurgerConstructor() {
@@ -87,8 +87,12 @@ function BurgerConstructor() {
         dispatch({ type: CONSTRUCTOR_REORDER, dragIndex, hoverIndex})
     }
 
+    const closeModal = () => {
+        dispatch({ type: CLOSE_ORDER })
+    }
+
     const modal = (order.orderRequest || answer.order) && (
-        <Modal action={CLEAR_INGREDIENTS}>
+        <Modal onClose={closeModal}>
             {answer.order ?
                 <OrderDetails number={answer.order.number}/>
                 : <PulseLoader color="#801AB2"/> 
