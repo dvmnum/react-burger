@@ -1,0 +1,33 @@
+.profile {
+    display: grid;
+    grid-template-columns: 1fr 480px 1fr;
+    gap: 60px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.link {
+    text-decoration: none;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+}
+
+.activeLink {
+    color: white;
+}
+
+.subText {
+    opacity: 0.4;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    justify-content: right;
+}

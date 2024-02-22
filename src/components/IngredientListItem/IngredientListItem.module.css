@@ -10,6 +10,9 @@
     border-radius: 16px;
 
     cursor: pointer;
+
+    color: unset;
+    text-decoration: none;
 }
 
 .item img {

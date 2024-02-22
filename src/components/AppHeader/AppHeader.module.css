@@ -26,3 +26,26 @@
     justify-content: right;
     gap: 8px;
 }
+
+.link {
+    display: flex;
+    height: fit-content;
+
+    text-decoration: none;
+
+    border-radius: var(--common-border-radius-s);
+
+    /* transition: var(--common-transition); */
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+.activeLink {
+    color: white;
+}
+
+.link:hover {
+    background-color: var(--background-alt);
+}

@@ -9,13 +9,15 @@ import IngredientListItem from '../IngredientListItem/IngredientListItem'
 import { IngredientDetails } from '../Modal/IngredientDetails';
 import { REMOVE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
 import Modal from '../Modal/Modal'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function BurgerIngredients() {
     const data = useSelector(state => state.ingredientsReducer.ingredients)
     const addedBun = useSelector(state => state.constructorReducer.bun)
     const addedIngredients = useSelector(state => state.constructorReducer.ingredients)
-    const ingedientDetails = useSelector(state => state.currentIngredientReducer.addedIngredient)
     const dispatch = useDispatch()
+    const location = useLocation()
+    const navigate = useNavigate()
 
     const [current, setCurrent] = useState('buns');
 
@@ -40,17 +42,7 @@ function BurgerIngredients() {
 
     const openModal = (modalData) => {
         dispatch({ type: SET_CURRENT_INGREDIENT, payload: modalData });
-    }
-
-    const closeModal = () => {
-        dispatch({ type: REMOVE_CURRENT_INGREDIENT })
-    }
-
-    const modal = ingedientDetails && (
-        <Modal title='Детали ингредиента' onClose={closeModal}>
-            <IngredientDetails data={ingedientDetails} />
-        </Modal>
-    )
+    }    
     
     return (
         <div className='mt-10'>
@@ -63,39 +55,45 @@ function BurgerIngredients() {
             <div className={styles.ingredientsList} onScroll={onscroll}>
                 <IngredientListModule title='Булки'>
                     {buns.map((product, index) =>
-                        <IngredientListItem
-                            key={product._id}
-                            data={product}
-                            counter={addedBun && addedBun._id === product._id}
-                            counterValue={2}
-                            onClick={() => openModal(product)}
-                        />)
+
+                            <IngredientListItem
+                                key={product._id}
+                                data={product}
+                                counter={addedBun && addedBun._id === product._id}
+                                counterValue={2}
+                                onClick={() => openModal(product)}
+                            />
+                        )
                     }
                 </IngredientListModule>
                 <IngredientListModule title='Соусы'>
                     {sauces.map((product, index) =>
-                        <IngredientListItem
-                            key={product._id}
-                            data={product}
-                            counter={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id) ? true : false}
-                            counterValue={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id).length}
-                            onClick={() => openModal(product)}
-                        />)
+                        
+                            <IngredientListItem
+                                key={product._id}
+                                data={product}
+                                counter={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id) ? true : false}
+                                counterValue={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id).length}
+                                onClick={() => openModal(product)}
+                            />
+                        )
                     }
                 </IngredientListModule>
                 <IngredientListModule title='Начинки'>
                     {mains.map((product, index) =>
-                        <IngredientListItem
-                            key={product._id}
-                            data={product}
-                            counter={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id) ? true : false}
-                            counterValue={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id).length}
-                            onClick={() => openModal(product)}
-                        />)
+
+                            <IngredientListItem
+                                key={product._id}
+                                data={product}
+                                counter={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id) ? true : false}
+                                counterValue={addedIngredients.length && addedIngredients.filter((item) => item._id === product._id).length}
+                                onClick={() => openModal(product)}
+                            />
+                    )
                     }
                 </IngredientListModule>
             </div>
-            {modal}
+            {/* {modal} */}
         </div>
     );
 }
