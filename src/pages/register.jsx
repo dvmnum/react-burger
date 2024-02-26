@@ -3,7 +3,7 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { register, setFormValue } from '../services/actions/registration';
-import { createRef, useRef, useState } from 'react';
+import { createRef, useState } from 'react';
 
 export const RegisterPage = () => {
     const { email, password, name } = useSelector(state => state.registrationReducer.form)

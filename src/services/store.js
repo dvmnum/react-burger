@@ -8,6 +8,8 @@ import { authReducer } from './reducers/checkAuth'
 import { loginReducer } from './reducers/login'
 import { profileChangeReducer } from './reducers/profile'
 import { registrationReducer } from "./reducers/registration"
+import { forgotPasswordReducer } from "./reducers/forgot-password"
+import { resetPasswordReducer } from "./reducers/reset-password"
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const rootReducer = combineReducers({
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
     registrationReducer,
     authReducer,
     loginReducer,
-    profileChangeReducer
+    profileChangeReducer,
+    forgotPasswordReducer,
+    resetPasswordReducer
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

@@ -6,6 +6,7 @@ const initialState = {
         password: '',
     },
     loginRequest: false,
+    loginSuccess: false,
     loginFailed: false,
 }
 
@@ -29,9 +30,8 @@ export const loginReducer = (state = initialState, action) => {
         case LOGIN_FORM_SUBMIT_SUCCESS: {
             return {
                 ...state,
-                form: {
-                    ...initialState.form
-                },
+                form: action.payload,
+                loginSuccess: true,
                 loginRequest: false
             }
         }

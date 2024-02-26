@@ -1,14 +1,13 @@
 import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { createRef, useRef, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login, setLoginValue } from '../services/actions/login';
-import { setProfileValue } from '../services/actions/profile';
-
 
 export const LoginPage = () => {
     const { email, password } = useSelector(store => store.loginReducer.form)
+    const success = useSelector(store => store.loginReducer.loginSuccess)
     const [ inputType, setInputType ] = useState({ input: 'password', icon: 'ShowIcon' })
 
     const dispatch = useDispatch()
@@ -29,10 +28,13 @@ export const LoginPage = () => {
         })
     }
 
+    useEffect(() => {
+        success && navigate('/profile');
+    }, [success, navigate])
+
     const onFormSubmit = e => {
         e.preventDefault();
         dispatch(login())
-        navigate('/profile');
     }
 
     return (
@@ -44,7 +46,7 @@ export const LoginPage = () => {
                     placeholder={'E-mail'}
                     onChange={onFormChange}
                     
-                    value={email}
+                    value={email ? email : ''}
                     name={'email'}
                     errorText={'Ошибка'}
                     size={'default'}
@@ -54,7 +56,7 @@ export const LoginPage = () => {
                     placeholder={'Пароль'}
                     onChange={onFormChange}
                     icon={inputType.icon}
-                    value={password}
+                    value={password ? password : ''}
                     name={'password'}
                     ref={passwordRef}
                     onIconClick={switchPasswordType}

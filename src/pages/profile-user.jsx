@@ -1,21 +1,34 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useRef, useState } from "react"
 import styles from './profile.module.css'
 import { useDispatch, useSelector } from "react-redux"
-import { profileChange, setProfileValue } from "../services/actions/profile"
+import { profileChange, profileGet, setProfileValue } from "../services/actions/profile"
+import { useEffect, useState } from "react"
+import { setUser } from "../services/actions/checkAuth"
 
 export const User = () => {
     const { name, email, password } = useSelector(store => store.profileChangeReducer.form)
+    const [ readOnly, setReadOnly ] = useState(true)
+    const [ inputs, changed ] = useState(false)
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(profileGet())
+    }, [dispatch])
+
+    const onIconClick = () => {
+        readOnly === true ? setReadOnly(false) : setReadOnly(true)
+    }
+
     const onFormChange = e => {
         dispatch(setProfileValue(e.target.name, e.target.value))
+        changed(true)
     }
 
     const onSubmit = e => {
         e.preventDefault();
         dispatch(profileChange())
+        dispatch(setUser({ name, email }))
     }
 
     return (
@@ -29,6 +42,9 @@ export const User = () => {
                 name={'name'}
                 errorText={'Ошибка'}
                 size={'default'}
+                onIconClick={onIconClick}
+                readOnly={readOnly}
+                disabled={readOnly}
                 extraClass='mb-6'
             />
             <Input
@@ -40,6 +56,9 @@ export const User = () => {
                 name={'email'}
                 errorText={'Ошибка'}
                 size={'default'}
+                onIconClick={onIconClick}
+                readOnly={readOnly}
+                disabled={readOnly}
                 extraClass='mb-6'
             />
             <Input
@@ -51,14 +70,18 @@ export const User = () => {
                 name={'password'}
                 errorText={'Ошибка'}
                 size={'default'}
+                onIconClick={onIconClick}
+                readOnly={readOnly}
+                disabled={readOnly}
                 extraClass='mb-6'
             />
-            <div className={styles.buttons}>
+            <div className={styles.buttons} style={{ opacity: inputs ? 1 : 0 }}>
                 <Button
                     htmlType="reset"
                     type="secondary"
                     size="medium"
                     extraClass={styles.button}
+                    onClick={() => {changed(false); setReadOnly(true)}}
                 >
                     Отменить
                 </Button>
@@ -67,6 +90,7 @@ export const User = () => {
                     type="primary"
                     size="medium"
                     extraClass={styles.button}
+                    onClick={() => {changed(false); setReadOnly(true)}}
                 >
                     Сохранить
                 </Button>

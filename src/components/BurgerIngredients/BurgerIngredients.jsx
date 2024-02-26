@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -6,18 +6,13 @@ import styles from './BurgerIngredients.module.css';
 
 import IngredientListModule from '../IngredientListModule/IngredientListModule'
 import IngredientListItem from '../IngredientListItem/IngredientListItem'
-import { IngredientDetails } from '../Modal/IngredientDetails';
-import { REMOVE_CURRENT_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
-import Modal from '../Modal/Modal'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { SET_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
 
 function BurgerIngredients() {
     const data = useSelector(state => state.ingredientsReducer.ingredients)
     const addedBun = useSelector(state => state.constructorReducer.bun)
     const addedIngredients = useSelector(state => state.constructorReducer.ingredients)
     const dispatch = useDispatch()
-    const location = useLocation()
-    const navigate = useNavigate()
 
     const [current, setCurrent] = useState('buns');
 

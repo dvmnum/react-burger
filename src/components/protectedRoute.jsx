@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux"
 import { Navigate, useLocation } from "react-router-dom"
 import PulseLoader from "react-spinners/PulseLoader";
+import pulseStyles from './pulseStyles.module.css'
+
+import PropTypes from 'prop-types';
 
 const Protected = ({ onlyUnAuth = false, component }) => {
     const isAuthChecked = useSelector(state => state.authReducer.isAuthChecked)
@@ -8,7 +11,7 @@ const Protected = ({ onlyUnAuth = false, component }) => {
     const location = useLocation()
 
     if (!isAuthChecked) {
-        return <PulseLoader color="#801AB2"/>
+        return <PulseLoader className={pulseStyles.pulse} color="#36d7b7"/>
     }
 
     if (onlyUnAuth && user) {
@@ -21,6 +24,11 @@ const Protected = ({ onlyUnAuth = false, component }) => {
     }
 
     return component
+}
+
+Protected.propTypes = {
+    onlyUnAuth: PropTypes.bool,
+    component: PropTypes.element
 }
 
 export const OnlyAuth = Protected

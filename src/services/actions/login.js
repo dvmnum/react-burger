@@ -16,7 +16,6 @@ export const login = () => (dispatch, getState) => {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
-            // "Authorization": localStorage.getItem('accessToken'),
         }, 
         body: JSON.stringify(getState().loginReducer.form)
     }).then((res) => {
@@ -26,7 +25,7 @@ export const login = () => (dispatch, getState) => {
         dispatch(setAuthChecked(true))
         dispatch({
             type: LOGIN_FORM_SUBMIT_SUCCESS,
-            payload: res
+            payload: res.user
         });
     }).catch(err => {
         dispatch({

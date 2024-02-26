@@ -2,7 +2,7 @@ import { SET_AUTH_CHECKED, SET_USER } from "../actions/checkAuth"
 
 const initialState = {
     user: null,
-    isAuthChecked: true
+    isAuthChecked: false
 }
 
 export const authReducer = (state = initialState, action) => {

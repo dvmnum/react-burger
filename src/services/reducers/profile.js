@@ -1,4 +1,4 @@
-import { PROFILE_FORM_SUBMIT, PROFILE_FORM_SUBMIT_FAILED, PROFILE_FORM_SUBMIT_SUCCESS, PROFILE_FORM_SET_VALUE } from "../actions/profile"
+import { PROFILE_FORM_SUBMIT, PROFILE_FORM_SUBMIT_FAILED, PROFILE_FORM_SUBMIT_SUCCESS, PROFILE_FORM_SET_VALUE, PROFILE_LOGOUT_SUCCESS, PROFILE_LOGOUT_FAILED } from "../actions/profile"
 
 const initialState = {
     form: {
@@ -6,6 +6,7 @@ const initialState = {
         password: '',
         name: '',
     },
+    logOut: false,
     profileChangeRequest: false,
     profileChangeFailed: false,
 }
@@ -14,6 +15,7 @@ export const profileChangeReducer = (state = initialState, action) => {
     switch(action.type) {
         case PROFILE_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value,
@@ -43,6 +45,21 @@ export const profileChangeReducer = (state = initialState, action) => {
                 ...state,
                 profileChangeRequest: false,
                 profileChangeFailed: true
+            }
+        }
+        case PROFILE_LOGOUT_SUCCESS: {
+            return {
+                ...state,
+                form: {
+                    email: '',
+                    password: '',
+                    name: '',
+                },
+            }
+        }
+        case PROFILE_LOGOUT_FAILED: {
+            return {
+                ...state
             }
         }
         default: {

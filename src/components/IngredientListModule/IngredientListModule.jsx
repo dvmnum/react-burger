@@ -13,7 +13,8 @@ function IngredientListModule({ title, children }) {
 }
 
 IngredientListModule.propTypes = {
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    children: PropTypes.array
 }
 
 export default IngredientListModule

@@ -1,14 +1,23 @@
 import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { passwordForgot, setPasswordForgotValue } from '../services/actions/forgot-password';
 
 export const ForgotPasswordPage = () => {
+    const { email } = useSelector(store => store.forgotPasswordReducer.form)
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const onChange = e => {
+        dispatch(setPasswordForgotValue(e.target.value))
+    }
 
     const onSubmit = e => {
         e.preventDefault()
-        // dispatch
+        dispatch(passwordForgot())
+        navigate('/reset-password')
     }
 
     return (
@@ -18,7 +27,8 @@ export const ForgotPasswordPage = () => {
                 <Input
                     type={'email'}
                     placeholder={'Укажите e-mail'}
-                    value={''}
+                    value={email}
+                    onChange={onChange}
                     name={'ForgotPasswordEmail'}
                     errorText={'Ошибка'}
                     size={'default'}

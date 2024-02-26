@@ -1,6 +1,7 @@
 import { useMemo, useEffect } from 'react';
 
 import styles from './BurgerConstructor.module.css'
+import pulseStyles from '../pulseStyles.module.css'
 
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorItemHolder from '../ConstructorItemHolder/ConstructorItemHolder'
@@ -14,13 +15,16 @@ import PulseLoader from "react-spinners/PulseLoader";
 import { sendOrder, setValue } from '../../services/actions/order';
 import { CLOSE_ORDER } from '../../services/actions/order';
 import { OrderDetails } from '../Modal/OrderDetails';
+import { useNavigate } from 'react-router-dom';
 
 function BurgerConstructor() {
     const bun = useSelector(state => state.constructorReducer.bun);
     const ingredients = useSelector(state => state.constructorReducer.ingredients);
     const order = useSelector(state => state.orderReducer);
     const answer = useSelector(state => state.orderReducer.answer);
+
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         order['ingredients'] = []
@@ -78,9 +82,13 @@ function BurgerConstructor() {
     }
 
     const getOrderNumber = () => {
-        dispatch(setValue(order['ingredients']))
-        dispatch(sendOrder(order))
-        dispatch({ type: CLEAR_INGREDIENTS })
+        if (localStorage.accessToken) {
+            dispatch(setValue(order['ingredients']))
+            dispatch(sendOrder(order))
+            dispatch({ type: CLEAR_INGREDIENTS })
+        } else {
+            navigate('/login')
+        }
     }
 
     const moveCard = (dragIndex, hoverIndex) => {
@@ -95,7 +103,7 @@ function BurgerConstructor() {
         <Modal onClose={closeModal}>
             {answer.order ?
                 <OrderDetails number={answer.order.number}/>
-                : <PulseLoader color="#801AB2"/> 
+                : <PulseLoader className={pulseStyles.pulse} color="#36d7b7"/> 
             }
         </Modal>
     ) 

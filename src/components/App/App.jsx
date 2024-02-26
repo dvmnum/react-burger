@@ -5,7 +5,7 @@ import styles from './App.module.css'
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { HomePage, LoginPage, ProfilePage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientDetailPage } from '../../pages';
+import { HomePage, LoginPage, ProfilePage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, IngredientDetailPage, NotFoundPage } from '../../pages';
 import Modal from '../Modal/Modal.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -50,16 +50,16 @@ const App = () => {
           <>
             <Routes location={state?.backgroundLocation || location}>
               <Route path='/' element={<HomePage />} />
-              <Route path='/login' element={<LoginPage />} />
+              <Route path='/login' element={<OnlyUnAuth component={<LoginPage />}/>} />
               <Route path='/register' element={<OnlyUnAuth component={<RegisterPage />}/>} />
               <Route path='/profile' element={<OnlyAuth component={<ProfilePage />} />}>
                 <Route index element={<User />}/>
                 <Route path='orders' element={<Orders/>}/>
               </Route>
-              <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-              <Route path='/reset-password' element={<ResetPasswordPage />} />
+              <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPasswordPage />}/>} />
+              <Route path='/reset-password' element={<OnlyUnAuth component={<ResetPasswordPage />}/>} />
               <Route path='/ingredients/:id' element={<IngredientDetailPage />} />
-              <Route path='*' element={<HomePage />} />
+              <Route path='*' element={<NotFoundPage />} />
               
             </Routes>
 
