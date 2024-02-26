@@ -17,3 +17,7 @@
 .ingredientsList::-webkit-scrollbar-thumb {
     background-color: var(--text-inactive-color);
 }
+
+.tabs {
+    display: flex;
+}
