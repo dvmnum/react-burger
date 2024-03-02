@@ -1,13 +1,13 @@
 import { SET_INGREDIENTS, ORDER_POST_REQUEST, ORDER_POST_SUCCESS, ORDER_POST_FAILED, CLOSE_ORDER } from "../actions/order"
 
-const inititalState = {
+const initialState = {
     ingredients: [],
     orderRequest: false,
     orderFailed: false,
     answer: {}
 }
 
-export const orderReducer = (state = inititalState, action) => {
+export const orderReducer = (state = initialState, action) => {
     switch(action.type) {
         case SET_INGREDIENTS: {
             return {

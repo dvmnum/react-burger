@@ -15,7 +15,8 @@ export const sendOrder = (data) => (dispatch, getState) => {
     request('orders', {
         method: 'POST',
         headers: {
-            "Content-Type": "application/json;charset=utf-8"
+            "Content-Type": "application/json;charset=utf-8",
+            "Authorization": localStorage.getItem('accessToken'),
         },
         body: JSON.stringify(data)
     }).then(data => {

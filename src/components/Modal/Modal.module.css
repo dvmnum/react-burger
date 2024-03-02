@@ -42,6 +42,7 @@
 .img {
     width: 480px;
     display: block;
+    margin-inline: auto;
     margin-bottom: 16px;
 }
 

@@ -4,9 +4,12 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import { productPropTypes } from '../../utils/prop-types'
 
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 
 function IngredientListItem({ data, counter, counterValue, onClick }) {
     const { type } = data
+
+    const location = useLocation()
     
     const [{ isDrag }, dragRef] = useDrag({
         type: type,
@@ -17,7 +20,14 @@ function IngredientListItem({ data, counter, counterValue, onClick }) {
     });
     
     return (
-        <li className={ styles.item } onClick={onClick} ref={dragRef} style={{ opacity: isDrag ? 0.3 : 1 }}>
+        <Link
+            to={`/ingredients/${data._id}`}
+            state={{ backgroundLocation: location }}
+            className={ styles.item }
+            onClick={onClick}
+            ref={dragRef}
+            style={{ opacity: isDrag ? 0.3 : 1 }}
+        >
             <img src={data.image} alt={data.name} />
             <div className={ styles.listItem }>
                 <p className='text text_type_digits-default mr-2'>{data.price}</p>
@@ -27,7 +37,7 @@ function IngredientListItem({ data, counter, counterValue, onClick }) {
             {counter && counterValue > 0 &&
                 <Counter count={counterValue} size="default" />
             }
-        </li>
+        </Link>
     )
 }
 

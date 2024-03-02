@@ -1,29 +1,47 @@
 import headerStyles from "./AppHeader.module.css"
-import React from 'react';
-import Link from "../Link/Link.jsx"
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, NavLink } from "react-router-dom";
+import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from "react-redux";
 
 function AppHeader() {
-    const [current, setCurrent] = React.useState(true);
+    const user = useSelector(store => store.authReducer.user)
 
     return (
         <header className={headerStyles.header}>
             <div className={headerStyles.headerInner}>
                 <nav className={headerStyles.navLeft}>
-                    <Link clickHandler={() => setCurrent(true)} isActive={current} text="Конструктор" icon="burger">
-                        
-                    </Link>
-                    <Link clickHandler={() => setCurrent(false)} isActive={!current} text="Лента заказов" icon="list">
-
-                    </Link>
+                    <NavLink to='' className={({isActive}) => isActive ? `${headerStyles.link} pt-4 pb-4 pr-5 pl-5 active` : `${headerStyles.link} pt-4 pb-4 pr-5 pl-5`}>
+                        {({isActive}) => (
+                            <>
+                                <BurgerIcon type={isActive ? 'primary' : 'secondary'}/>
+                                <span className={`${isActive ? headerStyles.activeLink : 'text_color_inactive'} text text_type_main-default ml-2`}>Конструктор</span>
+                            </>
+                        )}
+                    </NavLink>
+                    <NavLink to='list' className={({isActive}) => isActive ? `${headerStyles.link} pt-4 pb-4 pr-5 pl-5 active` : `${headerStyles.link} pt-4 pb-4 pr-5 pl-5`}>
+                        {({isActive}) => (
+                            <>
+                                <ListIcon type={isActive ? 'primary' : 'secondary'}/>
+                                <span className={`${isActive ? headerStyles.activeLink : 'text_color_inactive'} text text_type_main-default ml-2`}>Лента заказов</span>
+                            </>
+                        )}
+                    </NavLink>
                 </nav>
 
-                <Logo />
+                <Link to='/'>
+                    <Logo />
+                </Link>
 
                 <nav className={headerStyles.navRight}>
-                    <Link text="Личный кабинет" icon="person">
-                        
-                    </Link>
+                    <NavLink to='profile' className={({isActive}) => isActive ? `${headerStyles.link} pt-4 pb-4 pr-5 pl-5 active` : `${headerStyles.link} pt-4 pb-4 pr-5 pl-5`}>
+                        {({isActive}) => (
+                            <>
+                                <ProfileIcon type={isActive ? 'primary' : 'secondary'}/>
+                                <span className={`${isActive ? headerStyles.activeLink : 'text_color_inactive'} text text_type_main-default ml-2`}>{user ? user.name : 'Личный кабинет'}</span>
+                            </>
+                        )}
+                    </NavLink>
                 </nav>
             </div>
         </header>

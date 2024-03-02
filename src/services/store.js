@@ -4,13 +4,25 @@ import { ingredientsReducer } from "./reducers/ingredients";
 import { constructorReducer } from "./reducers/constructor";
 import { currentIngredientReducer } from "./reducers/currentIngredient";
 import { orderReducer } from "./reducers/order";
+import { authReducer } from './reducers/checkAuth'
+import { loginReducer } from './reducers/login'
+import { profileChangeReducer } from './reducers/profile'
+import { registrationReducer } from "./reducers/registration"
+import { forgotPasswordReducer } from "./reducers/forgot-password"
+import { resetPasswordReducer } from "./reducers/reset-password"
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const rootReducer = combineReducers({
     ingredientsReducer,
     constructorReducer,
     currentIngredientReducer,
-    orderReducer
+    orderReducer,
+    registrationReducer,
+    authReducer,
+    loginReducer,
+    profileChangeReducer,
+    forgotPasswordReducer,
+    resetPasswordReducer
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
