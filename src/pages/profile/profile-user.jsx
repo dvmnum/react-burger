@@ -1,14 +1,14 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './profile.module.css'
 import { useDispatch, useSelector } from "react-redux"
-import { profileChange, profileGet, setProfileValue } from "../services/actions/profile"
+import { profileChange, profileGet, setProfileValue } from "../../services/actions/profile"
 import { useEffect, useState } from "react"
-import { setUser } from "../services/actions/checkAuth"
+import { setUser } from "../../services/actions/checkAuth"
+import { useProfileUserForm } from "../../hooks/useProfileUserForm"
 
 export const User = () => {
-    const { name, email, password } = useSelector(store => store.profileChangeReducer.form)
+    const { values, handleChange, inputs, changed, } = useProfileUserForm({ name: '', email: '', password: '' })
     const [ readOnly, setReadOnly ] = useState(true)
-    const [ inputs, changed ] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -20,15 +20,11 @@ export const User = () => {
         readOnly === true ? setReadOnly(false) : setReadOnly(true)
     }
 
-    const onFormChange = e => {
-        dispatch(setProfileValue(e.target.name, e.target.value))
-        changed(true)
-    }
-
     const onSubmit = e => {
         e.preventDefault();
         dispatch(profileChange())
-        dispatch(setUser({ name, email }))
+
+        dispatch(setUser({ name: values.name, email: values.email }))
     }
 
     return (
@@ -36,9 +32,9 @@ export const User = () => {
             <Input
                 type={'text'}
                 placeholder={'Имя'}
-                onChange={onFormChange}
+                onChange={handleChange}
                 icon={'EditIcon'}
-                value={name ? name : ''}
+                value={values.name || ''}
                 name={'name'}
                 errorText={'Ошибка'}
                 size={'default'}
@@ -50,9 +46,9 @@ export const User = () => {
             <Input
                 type={'text'}
                 placeholder={'Логин'}
-                onChange={onFormChange}
+                onChange={handleChange}
                 icon={'EditIcon'}
-                value={email ? email : ''}
+                value={values.email || ''}
                 name={'email'}
                 errorText={'Ошибка'}
                 size={'default'}
@@ -64,9 +60,9 @@ export const User = () => {
             <Input
                 type={'password'}
                 placeholder={'Пароль'}
-                onChange={onFormChange}
+                onChange={handleChange}
                 icon={'EditIcon'}
-                value={password ? password : ''}
+                value={values.password || ''}
                 name={'password'}
                 errorText={'Ошибка'}
                 size={'default'}

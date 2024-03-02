@@ -14,8 +14,8 @@ import { REMOVE_CURRENT_INGREDIENT } from '../../services/actions/currentIngredi
 import { IngredientDetails } from '../Modal/IngredientDetails.jsx';
 import { checkUserAuth } from '../../services/actions/checkAuth.js';
 import { OnlyAuth, OnlyUnAuth } from '../protectedRoute.jsx';
-import { User } from '../../pages/profile-user.jsx';
-import { Orders } from '../../pages/profile-orders.jsx';
+import { User } from '../../pages/profile/profile-user.jsx';
+import { Orders } from '../../pages/profile/profile-orders.jsx';
 
 const App = () => {
   const location = useLocation()
@@ -50,7 +50,7 @@ const App = () => {
           <>
             <Routes location={state?.backgroundLocation || location}>
               <Route path='/' element={<HomePage />} />
-              <Route path='/login' element={<OnlyUnAuth component={<LoginPage />}/>} />
+              <Route path='/login' element={<OnlyUnAuth component={<LoginPage />} />} />
               <Route path='/register' element={<OnlyUnAuth component={<RegisterPage />}/>} />
               <Route path='/profile' element={<OnlyAuth component={<ProfilePage />} />}>
                 <Route index element={<User />}/>

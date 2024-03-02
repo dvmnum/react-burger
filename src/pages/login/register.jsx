@@ -2,19 +2,16 @@ import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { register, setFormValue } from '../services/actions/registration';
+import { register, setFormValue } from '../../services/actions/registration';
 import { createRef, useState } from 'react';
+import { useRegisterForm } from '../../hooks/useRegisterForm';
 
 export const RegisterPage = () => {
-    const { email, password, name } = useSelector(state => state.registrationReducer.form)
     const [ inputType, setInputType ] = useState({ input: 'password', icon: 'ShowIcon' })
+    const { values, handleChange } = useRegisterForm({ email: '', password: '', name: '' })
 
     const dispatch = useDispatch()
     const passwordRef = createRef()
-
-    const onFormChange = e => {
-        dispatch(setFormValue(e.target.name, e.target.value))
-    }
 
     const switchPasswordType = e => {
         inputType.input === 'password' ? setInputType({
@@ -38,32 +35,35 @@ export const RegisterPage = () => {
                 <Input
                     type={'text'}
                     placeholder={'Имя'}
-                    onChange={onFormChange}
-                    value={name}
+                    onChange={handleChange}
+                    value={values.name || ''}
                     name={'name'}
                     errorText={'Ошибка'}
                     size={'default'}
+                    autoComplete={'name'}
                 />
                 <Input
                     type={'email'}
                     placeholder={'Укажите e-mail'}
-                    onChange={onFormChange}
-                    value={email}
+                    onChange={handleChange}
+                    value={values.email || ''}
                     name={'email'}
                     errorText={'Ошибка'}
                     size={'default'}
+                    autoComplete={'email'}
                 />
                 <Input
                     type={inputType.input}
                     placeholder={'Пароль'}
-                    onChange={onFormChange}
+                    onChange={handleChange}
                     icon={inputType.icon}
-                    value={password}
+                    value={values.password || ''}
                     name={'password'}
                     ref={passwordRef}
                     onIconClick={switchPasswordType}
                     errorText={'Ошибка'}
                     size={'default'}
+                    autoComplete={'password'}
                 />
                 <Button
                     htmlType="submit"

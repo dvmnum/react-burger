@@ -1,18 +1,15 @@
 import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { passwordForgot, setPasswordForgotValue } from '../services/actions/forgot-password';
+import { passwordForgot } from '../../services/actions/forgot-password';
+import { useForgotPasswordForm } from '../../hooks/useForgotPasswordForm';
 
 export const ForgotPasswordPage = () => {
-    const { email } = useSelector(store => store.forgotPasswordReducer.form)
+    const { values, handleChange } = useForgotPasswordForm({ email: '' })
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    const onChange = e => {
-        dispatch(setPasswordForgotValue(e.target.value))
-    }
 
     const onSubmit = e => {
         e.preventDefault()
@@ -27,11 +24,12 @@ export const ForgotPasswordPage = () => {
                 <Input
                     type={'email'}
                     placeholder={'Укажите e-mail'}
-                    value={email}
-                    onChange={onChange}
+                    value={values.email || ''}
+                    onChange={handleChange}
                     name={'ForgotPasswordEmail'}
                     errorText={'Ошибка'}
                     size={'default'}
+                    autoComplete={'email'}
                 />
                 <Button
                     htmlType="submit"

@@ -3,10 +3,12 @@ import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-component
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { passwordReset, setPasswordResetValue } from '../services/actions/reset-password';
+import { passwordReset, setPasswordResetValue } from '../../services/actions/reset-password';
+import { useResetPasswordForm } from '../../hooks/useResetPasswordForm copy';
 
 export const ResetPasswordPage = () => {
-    const { password, token } = useSelector(store => store.resetPasswordReducer.form)
+    const { values, handleChange } = useResetPasswordForm({ password: '', token: '' })
+
     const [ inputType, setInputType ] = useState({ input: 'password', icon: 'ShowIcon' })
 
     const dispatch = useDispatch()
@@ -22,10 +24,6 @@ export const ResetPasswordPage = () => {
         })
     }
 
-    const onChange = e => {
-        dispatch(setPasswordResetValue(e.target.name, e.target.value))
-    }
-
     const onSubmit = e => {
         e.preventDefault()
         dispatch(passwordReset())
@@ -39,9 +37,9 @@ export const ResetPasswordPage = () => {
                 <Input
                     type={inputType.input}
                     placeholder={'Введите новый пароль'}
-                    onChange={onChange}
+                    onChange={handleChange}
                     icon={inputType.icon}
-                    value={password}
+                    value={values.password || ''}
                     name={'password'}
                     onIconClick={switchPasswordType}
                     errorText={'Ошибка'}
@@ -50,8 +48,8 @@ export const ResetPasswordPage = () => {
                 <Input
                     type={'text'}
                     placeholder={'Введите код из письма'}
-                    onChange={onChange}
-                    value={token}
+                    onChange={handleChange}
+                    value={values.token || ''}
                     name={'token'}
                     errorText={'Ошибка'}
                     size={'default'}
