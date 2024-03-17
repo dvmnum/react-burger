@@ -12,7 +12,7 @@ import { forgotPasswordReducer } from "./reducers/forgot-password"
 import { resetPasswordReducer } from "./reducers/reset-password"
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     ingredientsReducer,
     constructorReducer,
     currentIngredientReducer,

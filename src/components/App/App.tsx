@@ -1,7 +1,6 @@
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import styles from './App.module.css'
@@ -25,28 +24,27 @@ import { OnlyAuth, OnlyUnAuth } from '../protectedRoute';
 import { User } from '../../pages/profile/profile-user';
 import { Orders } from '../../pages/profile/profile-orders';
 import { getIngredients } from '../../utils/request';
+import { useAppDispatch, useAppSelector } from "../../utils/dispatch";
 
 const App: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const isLoading = useSelector((store: any) => store.ingredientsReducer.isLoading)
-  const hasError = useSelector((store: any) => store.ingredientsReducer.hasError)
-  const ingredients = useSelector((store: any) => store.ingredientsReducer.ingredients)
-  const ingedientDetails = useSelector((state: any) => state.currentIngredientReducer.addedIngredient)
+  const isLoading = useAppSelector(store => store.ingredientsReducer.isLoading)
+  const hasError = useAppSelector(store => store.ingredientsReducer.hasError)
+  const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
+  const ingedientDetails = useAppSelector(state => state.currentIngredientReducer.addedIngredient)
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(checkUserAuth())
-    // @ts-ignore
     dispatch(getIngredients())
   }, [dispatch])
 
   let state = location.state
 
   const closeModal = () => {
-    dispatch({ type: REMOVE_CURRENT_INGREDIENT })
+    // dispatch({ type: REMOVE_CURRENT_INGREDIENT })
     navigate(-1)
   }
 
@@ -54,8 +52,6 @@ const App: React.FC = () => {
     <DndProvider backend={HTML5Backend}>
       <AppHeader />
       <main className={styles.container}>
-        {isLoading && console.log('Загрузка...')}
-        {hasError && console.log('Произошла ошибка')}
         {!hasError && !isLoading && ingredients &&
           <>
             <Routes location={state?.backgroundLocation || location}>
@@ -72,8 +68,8 @@ const App: React.FC = () => {
               <Route path='*' element={<NotFoundPage />} />
               
             </Routes>
-
-            {state?.backgroundLocation && ingedientDetails && (
+            
+            {state?.backgroundLocation && (
               <Routes>
                 <Route path='/ingredients/:id' element={
                   <Modal title='Детали ингредиента' onClose={closeModal}>

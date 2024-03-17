@@ -1,17 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
 import { setPasswordResetValue } from "../services/actions/reset-password";
+import { useAppDispatch, useAppSelector } from "../utils/dispatch";
 
 type RPForm = (arg0: { password: string, token: string }) => {
   values: { [key: string]: string },
-  handleChange: (e: React.SyntheticEvent) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const useResetPasswordForm: RPForm = () => {
-  const values = useSelector((state: any) => state.resetPasswordReducer.form)
+  const values = useAppSelector(store => store.resetPasswordReducer.form)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const handleChange = (e: React.SyntheticEvent) => {    
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {    
     dispatch(setPasswordResetValue(
       (e.target as HTMLInputElement).name,
       (e.target as HTMLInputElement).value

@@ -1,17 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
 import { setFormValue } from "../services/actions/registration";
+import { useAppDispatch, useAppSelector } from "../utils/dispatch";
 
 type RForm = (arg0: { email: string, password: string, name: string }) => {
   values: { [key: string]: string },
-  handleChange: (e: React.SyntheticEvent) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const useRegisterForm: RForm = () => {
-  const values = useSelector((state: any) => state.registrationReducer.form)
+  const values = useAppSelector(store => store.registrationReducer.form)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const handleChange = (e: React.SyntheticEvent) => {    
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {    
     dispatch(setFormValue(
       (e.target as HTMLInputElement).name,
       (e.target as HTMLInputElement).value

@@ -1,9 +1,7 @@
-import { useSelector } from "react-redux"
 import { Navigate, useLocation } from "react-router-dom"
 import PulseLoader from "react-spinners/PulseLoader";
 import pulseStyles from './pulseStyles.module.css'
-
-import { ReactNode } from "react";
+import { useAppSelector } from "../utils/dispatch";
 
 type ProtectedProps = {
     onlyUnAuth?: boolean,
@@ -11,8 +9,8 @@ type ProtectedProps = {
 }
 
 const Protected: React.FC<ProtectedProps> = ({ onlyUnAuth = false, component }) => {
-    const isAuthChecked = useSelector((state: any) => state.authReducer.isAuthChecked)
-    const user = useSelector((state: any) => state.authReducer.user)
+    const isAuthChecked = useAppSelector(store => store.authReducer.isAuthChecked)
+    const user = useAppSelector(store => store.authReducer.user)
     const location = useLocation()
 
     if (!isAuthChecked) {

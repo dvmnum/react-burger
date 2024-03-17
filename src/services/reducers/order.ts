@@ -1,7 +1,7 @@
 import { TIngredient } from "../../components/BurgerConstructor/BurgerConstructor"
 import { SET_INGREDIENTS, ORDER_POST_REQUEST, ORDER_POST_SUCCESS, ORDER_POST_FAILED, CLOSE_ORDER } from "../actions/order"
 
-type TOrder = {
+export type TOrder = {
     ingredients: TIngredient[],
     orderRequest: boolean,
     orderFailed: boolean,

@@ -3,7 +3,7 @@ import { ADD_BUN, ADD_INGREDIENT, DELETE_INGREDIENT, CONSTRUCTOR_REORDER, CLEAR_
 
 type TConstructor = {
     bun: TIngredient | null,
-    ingredients: TIngredient[]
+    ingredients: TIngredient[] | []
 }
 
 const initialState: TConstructor = {
@@ -36,7 +36,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         case (ADD_BUN): {
             return {
                 ...state,
-                bun: action.payload
+                bun: action.payload as TIngredient
             }
         }
         case (CONSTRUCTOR_REORDER): {

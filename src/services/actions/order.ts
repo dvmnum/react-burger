@@ -1,5 +1,6 @@
 import { TIngredient } from "../../components/BurgerConstructor/BurgerConstructor";
 import { request } from "../../utils/request"
+import { TOrder } from "../reducers/order";
 
 export const SET_INGREDIENTS = 'ORDER_POST'; 
 export const CLOSE_ORDER = 'CLOSE_ORDER'; 
@@ -12,7 +13,7 @@ export const setValue = (data: TIngredient[]) => {
 }
 
 // @ts-ignore
-export const sendOrder = (data: string[]) => (dispatch) => {
+export const sendOrder = (data: TOrder) => (dispatch) => {
     dispatch({ type: ORDER_POST_REQUEST });
     request('orders', {
         method: 'POST',

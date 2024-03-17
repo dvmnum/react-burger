@@ -1,19 +1,18 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components"
 import styles from './profile.module.css'
-import { useDispatch } from "react-redux"
 import { profileChange, profileGet } from "../../services/actions/profile"
 import { useEffect, useState } from "react"
 import { setUser } from "../../services/actions/checkAuth"
 import { useProfileUserForm } from "../../hooks/useProfileUserForm"
+import { useAppDispatch } from "../../utils/dispatch"
 
 export const User: React.FC = () => {
     const { values, handleChange, inputs, changed } = useProfileUserForm({ name: '', email: '', password: '' })
     const [ readOnly, setReadOnly ] = useState(true)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        //@ts-ignore
         dispatch(profileGet())
     }, [dispatch])
 
@@ -21,9 +20,8 @@ export const User: React.FC = () => {
         readOnly === true ? setReadOnly(false) : setReadOnly(true)
     }
 
-    const onSubmit = (e: React.SyntheticEvent) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(profileChange())
 
         dispatch(setUser({ name: values.name, email: values.email }))

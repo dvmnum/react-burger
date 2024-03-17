@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './BurgerIngredients.module.css';
@@ -8,12 +7,15 @@ import IngredientListModule from '../IngredientListModule/IngredientListModule'
 import IngredientListItem from '../IngredientListItem/IngredientListItem'
 import { SET_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
 import { TIngredient } from '../BurgerConstructor/BurgerConstructor';
+import { useAppDispatch, useAppSelector } from '../../utils/dispatch';
+import { useNavigate } from 'react-router-dom';
 
 const BurgerIngredients: React.FC = () => {
-    const data = useSelector((state: any) => state.ingredientsReducer.ingredients)
-    const addedBun = useSelector((state: any) => state.constructorReducer.bun)
-    const addedIngredients = useSelector((state: any) => state.constructorReducer.ingredients)
-    const dispatch = useDispatch()
+    const data = useAppSelector(store => store.ingredientsReducer.ingredients)
+    const addedBun = useAppSelector(store => store.constructorReducer.bun)
+    const addedIngredients = useAppSelector(store => store.constructorReducer.ingredients)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
 
     const [current, setCurrent] = useState('buns');
 
@@ -21,7 +23,7 @@ const BurgerIngredients: React.FC = () => {
     const mains = useMemo(() => data.filter((product: TIngredient) => product.type === 'main'), [data]);
     const sauces = useMemo(() => data.filter((product: TIngredient) => product.type === 'sauce'), [data]);
     
-    const onscroll = (e: React.SyntheticEvent) => {
+    const onscroll = (e: React.UIEvent<HTMLElement>) => {
         let parRect = (e.target as HTMLElement).getBoundingClientRect().top;
 
         (e.target as HTMLElement).childNodes.forEach((el: ChildNode, index: number) => {
@@ -36,10 +38,6 @@ const BurgerIngredients: React.FC = () => {
         })
     }
 
-    const openModal = (modalData: TIngredient) => {
-        dispatch({ type: SET_CURRENT_INGREDIENT, payload: modalData });
-    }    
-    
     return (
         <div className='mt-10'>
             <p className='text text_type_main-large mb-5'>Соберите бургер</p>
@@ -56,7 +54,6 @@ const BurgerIngredients: React.FC = () => {
                             data={product}
                             counter={addedBun && addedBun._id === product._id}
                             counterValue={2}
-                            onClick={() => openModal(product)}
                         />
                     )}
                 </IngredientListModule>
@@ -67,7 +64,6 @@ const BurgerIngredients: React.FC = () => {
                             data={product}
                             counter={addedIngredients.length && addedIngredients.filter((item: TIngredient) => item._id === product._id) ? true : false}
                             counterValue={addedIngredients.length && addedIngredients.filter((item: TIngredient) => item._id === product._id).length}
-                            onClick={() => openModal(product)}
                         />
                     )}
                 </IngredientListModule>
@@ -78,7 +74,6 @@ const BurgerIngredients: React.FC = () => {
                             data={product}
                             counter={addedIngredients.length && addedIngredients.filter((item: TIngredient) => item._id === product._id) ? true : false}
                             counterValue={addedIngredients.length && addedIngredients.filter((item: TIngredient) => item._id === product._id).length}
-                            onClick={() => openModal(product)}
                         />
                     )}
                 </IngredientListModule>

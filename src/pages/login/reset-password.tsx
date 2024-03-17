@@ -1,18 +1,18 @@
 import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { passwordReset } from '../../services/actions/reset-password';
 import { useResetPasswordForm } from '../../hooks/useResetPasswordForm';
 import { TICons } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons';
+import { useAppDispatch } from '../../utils/dispatch';
 
 export const ResetPasswordPage: React.FC = () => {
     const { values, handleChange } = useResetPasswordForm({ password: '', token: '' })
 
     const [ inputType, setInputType ] = useState({ input: 'password', icon: 'ShowIcon' })
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     const switchPasswordType = () => {
@@ -25,9 +25,8 @@ export const ResetPasswordPage: React.FC = () => {
         })
     }
 
-    const onSubmit = (e: React.SyntheticEvent) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        //@ts-ignore
         dispatch(passwordReset())
         navigate('/login')
     }

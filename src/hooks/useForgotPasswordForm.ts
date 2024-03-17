@@ -1,17 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
 import { setPasswordForgotValue } from "../services/actions/forgot-password";
+import { useAppDispatch, useAppSelector } from "../utils/dispatch";
 
 type FPForm = (arg0: { email: string }) => {
   values: { [key: string]: string },
-  handleChange: (e: React.SyntheticEvent) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const useForgotPasswordForm: FPForm = () => {
-  const values = useSelector((state: any) => state.forgotPasswordReducer.form)
+  const values = useAppSelector(state => state.forgotPasswordReducer.form)
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const handleChange = (e: React.SyntheticEvent) => {    
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {    
     dispatch(setPasswordForgotValue((e.target as HTMLInputElement).value))
   };
   

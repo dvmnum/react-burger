@@ -1,13 +1,12 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './profile.module.css'
-import { useDispatch } from 'react-redux';
 import { logOut } from '../../services/actions/profile';
+import { useAppDispatch } from '../../utils/dispatch';
 
 export const ProfilePage: React.FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     
-    const handleLogOut = (e: React.SyntheticEvent) => {
-        //@ts-ignore
+    const handleLogOut = () => {
         dispatch(logOut())
     }
 

@@ -6,7 +6,6 @@ import pulseStyles from '../pulseStyles.module.css'
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ConstructorItemHolder from '../ConstructorItemHolder/ConstructorItemHolder'
 import Modal from '../Modal/Modal'
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { ADD_BUN, ADD_INGREDIENT, CONSTRUCTOR_REORDER, DELETE_INGREDIENT, CLEAR_INGREDIENTS } from '../../services/actions/constructor';
 
@@ -16,18 +15,19 @@ import { sendOrder, setValue } from '../../services/actions/order';
 import { CLOSE_ORDER } from '../../services/actions/order';
 import { OrderDetails } from '../Modal/OrderDetails';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../utils/dispatch';
 
 export type TIngredient = {
     [name: string]: number | string
 }
 
 const BurgerConstructor: React.FC = () => {
-    const bun = useSelector((state: any) => state.constructorReducer.bun);
-    const ingredients = useSelector((state: any) => state.constructorReducer.ingredients);
-    const order = useSelector((state: any) => state.orderReducer);
-    const answer = useSelector((state: any) => state.orderReducer.answer);
+    const bun = useAppSelector(state => state.constructorReducer.bun);
+    const ingredients = useAppSelector(state => state.constructorReducer.ingredients);
+    const order = useAppSelector(state => state.orderReducer);
+    const answer = useAppSelector(state => state.orderReducer.answer);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const BurgerConstructor: React.FC = () => {
     }, [ bun, ingredients, order ] )
     
     const totalPrice = useMemo(() => (
-        (bun ? bun.price * 2 : 0) +
+        (bun ? (bun.price as number) * 2 : 0) +
         (ingredients.length ? ingredients.reduce((acc: number, item: TIngredient) => typeof item.price === 'number' && acc + item.price, 0) : 0))
         .toFixed(0),
     [ bun, ingredients ]);
@@ -88,7 +88,6 @@ const BurgerConstructor: React.FC = () => {
     const getOrderNumber = () => {
         if (localStorage.accessToken) {
             dispatch(setValue(order['ingredients']))
-            // @ts-ignore
             dispatch(sendOrder(order))
             dispatch({ type: CLEAR_INGREDIENTS })
         } else {
@@ -123,8 +122,8 @@ const BurgerConstructor: React.FC = () => {
                             type="top"
                             isLocked={true}
                             text={`${bun.name} (верх)`}
-                            price={bun.price}
-                            thumbnail={bun.image}
+                            price={bun.price as number}
+                            thumbnail={bun.image as string}
                             extraClass='ml-8'
                         />
                     }
@@ -149,8 +148,8 @@ const BurgerConstructor: React.FC = () => {
                             type="bottom"
                             isLocked={true}
                             text={`${bun.name} (низ)`}
-                            price={bun.price}
-                            thumbnail={bun.image}
+                            price={bun.price as number}
+                            thumbnail={bun.image as string}
                             extraClass='ml-8'
                         />
                     }

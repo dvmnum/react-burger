@@ -2,10 +2,10 @@ import headerStyles from "./AppHeader.module.css"
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, NavLink } from "react-router-dom";
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/dispatch";
 
 const AppHeader: React.FC = () => {
-    const user = useSelector((store: any) => store.authReducer.user)
+    const user = useAppSelector(store => store.authReducer.user)
 
     return (
         <header className={headerStyles.header}>

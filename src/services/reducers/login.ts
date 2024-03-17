@@ -24,6 +24,7 @@ export const loginReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case LOGIN_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value,

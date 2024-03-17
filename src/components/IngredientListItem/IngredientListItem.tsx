@@ -1,7 +1,5 @@
 import styles from './IngredientListItem.module.css'
-import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { productPropTypes } from '../../utils/prop-types'
 
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
@@ -9,12 +7,11 @@ import { TIngredient } from '../BurgerConstructor/BurgerConstructor';
 
 type ILIProps = {
     data: TIngredient,
-    counter: boolean,
+    counter: boolean | null,
     counterValue: number,
-    onClick: () => void
 }
 
-const IngredientListItem: React.FC<ILIProps> = ({ data, counter, counterValue, onClick }) => {
+const IngredientListItem: React.FC<ILIProps> = ({ data, counter, counterValue }) => {
     const { type } = data
 
     const location = useLocation()
@@ -32,7 +29,6 @@ const IngredientListItem: React.FC<ILIProps> = ({ data, counter, counterValue, o
             to={`/ingredients/${data._id}`}
             state={{ backgroundLocation: location }}
             className={ styles.item }
-            onClick={onClick}
             ref={dragRef}
             style={{ opacity: isDrag ? 0.3 : 1 }}
         >

@@ -1,19 +1,18 @@
 import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { passwordForgot } from '../../services/actions/forgot-password';
 import { useForgotPasswordForm } from '../../hooks/useForgotPasswordForm';
+import { useAppDispatch } from '../../utils/dispatch';
 
 export const ForgotPasswordPage: React.FC = () => {
     const { values, handleChange } = useForgotPasswordForm({ email: '' })
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const onSubmit = (e: React.SyntheticEvent) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        //@ts-ignore
         dispatch(passwordForgot())
         navigate('/reset-password')
     }

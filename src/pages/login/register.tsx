@@ -1,20 +1,20 @@
 import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { register } from '../../services/actions/registration';
 import { createRef, useState } from 'react';
 import { useRegisterForm } from '../../hooks/useRegisterForm';
 import { TICons } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons';
+import { useAppDispatch } from '../../utils/dispatch';
 
 export const RegisterPage: React.FC = () => {
     const [ inputType, setInputType ] = useState({ input: 'password', icon: 'ShowIcon' })
     const { values, handleChange } = useRegisterForm({ email: '', password: '', name: '' })
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const passwordRef = createRef<HTMLInputElement>()
 
-    const switchPasswordType = (e: React.SyntheticEvent) => {
+    const switchPasswordType = () => {
         inputType.input === 'password' ? setInputType({
             input: 'text',
             icon: 'HideIcon',
@@ -24,9 +24,8 @@ export const RegisterPage: React.FC = () => {
         })
     }
 
-    const onFormSubmit = (e: React.SyntheticEvent) => {
+    const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(register())
     }
 

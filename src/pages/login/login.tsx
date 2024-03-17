@@ -1,18 +1,18 @@
 import styles from './login.module.css'
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createRef, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../services/actions/login';
 import { useLoginForm } from '../../hooks/useLoginForm';
 import { TICons } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons';
+import { useAppDispatch, useAppSelector } from '../../utils/dispatch';
 
 export const LoginPage: React.FC = () => {
-    const success = useSelector((store: any) => store.loginReducer.loginSuccess)
+    const success = useAppSelector(store => store.loginReducer.loginSuccess)
     const [ inputType, setInputType ] = useState({ input: 'password', icon: 'ShowIcon' })
     const { values, handleChange } = useLoginForm({ email: '', password: '' })
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const passwordRef = createRef<HTMLInputElement>()
 
@@ -30,9 +30,8 @@ export const LoginPage: React.FC = () => {
         success && navigate('/profile');
     }, [success, navigate])
 
-    const onFormSubmit = (e: React.SyntheticEvent) => {
+    const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //@ts-ignore
         dispatch(login())
     }
 
