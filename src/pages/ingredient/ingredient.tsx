@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { IngredientDetails } from '../../components/Modal/IngredientDetails';
 import styles from './ingredient.module.css'
-import { TIngredient } from '../../components/BurgerConstructor/BurgerConstructor';
 import { useAppSelector } from '../../utils/dispatch';
+import { TIngredient } from '../../services/types/data';
 
 export const IngredientDetailPage: React.FC = () => {
     const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
@@ -13,7 +13,7 @@ export const IngredientDetailPage: React.FC = () => {
   
     return (
         <div className={styles.page}>
-            {data && <IngredientDetails data={data}/>}
+            {data && <IngredientDetails/>}
         </div>
     );
 }

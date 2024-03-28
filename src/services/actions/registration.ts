@@ -1,16 +1,42 @@
+import { AppThunk } from "../../utils/dispatch";
 import { request } from "../../utils/request"
+import {
+    REGISTER_FORM_SET_VALUE,
+    REGISTER_FORM_SUBMIT,
+    REGISTER_FORM_SUBMIT_FAILED,
+    REGISTER_FORM_SUBMIT_SUCCESS
+} from "../constants";
 
-export const REGISTER_FORM_SET_VALUE = 'REGISTER_FORM_SET_VALUE'
-export const REGISTER_FORM_SUBMIT = 'REGISTER_FORM_SUBMIT'
-export const REGISTER_FORM_SUBMIT_SUCCESS = 'REGISTER_FORM_SUBMIT_SUCCESS'
-export const REGISTER_FORM_SUBMIT_FAILED = 'REGISTER_FORM_SUBMIT_FAILED'
+export interface IRFSetValue {
+    readonly type: typeof REGISTER_FORM_SET_VALUE
+    readonly field: string
+    readonly value: string
+}
 
-export const setFormValue = (field: string, value: string) => ({
+export interface IRFSubmit {
+    readonly type: typeof REGISTER_FORM_SUBMIT
+}
+
+export interface IRFFailed {
+    readonly type: typeof REGISTER_FORM_SUBMIT_FAILED
+}
+
+export interface IRFSuccess {
+    readonly type: typeof REGISTER_FORM_SUBMIT_SUCCESS
+}
+
+export type TRegistrationActions = 
+    | IRFSetValue
+    | IRFSubmit
+    | IRFFailed
+    | IRFSuccess
+
+
+export const setFormValue = (field: string, value: string): IRFSetValue => ({
     type: REGISTER_FORM_SET_VALUE, field, value
 })
 
-//@ts-ignore
-export const register = () => (dispatch, getState) => {
+export const register = (): AppThunk => (dispatch, getState) => {
     dispatch({ type: REGISTER_FORM_SUBMIT });
     request('auth/register', {
         method: 'POST',

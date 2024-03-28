@@ -3,7 +3,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
-import { TIngredient } from '../BurgerConstructor/BurgerConstructor';
+import { TIngredient } from '../../services/types/data';
 
 type ILIProps = {
     data: TIngredient,

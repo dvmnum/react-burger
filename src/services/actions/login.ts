@@ -1,12 +1,42 @@
+import { AppThunk } from "../../utils/dispatch";
 import { request } from "../../utils/request"
+import {
+    LOGIN_FORM_SET_VALUE,
+    LOGIN_FORM_SUBMIT,
+    LOGIN_FORM_SUBMIT_FAILED,
+    LOGIN_FORM_SUBMIT_SUCCESS
+} from "../constants"
 import { setAuthChecked, setUser } from "./checkAuth"
 
-export const LOGIN_FORM_SET_VALUE = 'LOGIN_FORM_SET_VALUE'
-export const LOGIN_FORM_SUBMIT = 'LOGIN_FORM_SUBMIT'
-export const LOGIN_FORM_SUBMIT_SUCCESS = 'LOGIN_FORM_SUBMIT_SUCCESS'
-export const LOGIN_FORM_SUBMIT_FAILED = 'LOGIN_FORM_SUBMIT_FAILED'
+export interface ILFSetValue {
+    readonly type: typeof LOGIN_FORM_SET_VALUE;
+    readonly field: string;
+    readonly value: string;
+}
 
-export const setLoginValue = (field: string, value: string) => ({
+export interface ILFSubmit {
+    readonly type: typeof LOGIN_FORM_SUBMIT;
+}
+
+export interface ILFSuccess {
+    readonly type: typeof LOGIN_FORM_SUBMIT_SUCCESS;
+    readonly payload: {
+        email: string,
+        password: string
+    }
+}
+
+export interface ILFFailed {
+    readonly type: typeof LOGIN_FORM_SUBMIT_FAILED;
+}
+
+export type TLoginActions = 
+    | ILFSetValue
+    | ILFSubmit
+    | ILFSuccess
+    | ILFFailed
+
+export const setLoginValue = (field: string, value: string): ILFSetValue => ({
     type: LOGIN_FORM_SET_VALUE, field, value
 })
 
@@ -20,8 +50,7 @@ type answer = {
     refreshToken: string
 }
 
-//@ts-ignore
-export const login = () => (dispatch, getState) => {
+export const login = (): AppThunk => (dispatch, getState) => {
     dispatch({ type: LOGIN_FORM_SUBMIT });
     request('auth/login', {
         method: 'POST',
@@ -37,7 +66,7 @@ export const login = () => (dispatch, getState) => {
         dispatch({
             type: LOGIN_FORM_SUBMIT_SUCCESS,
             payload: (res as answer).user
-        });
+        } as ILFSuccess);
     }).catch(err => {
         dispatch({
             type: LOGIN_FORM_SUBMIT_FAILED,

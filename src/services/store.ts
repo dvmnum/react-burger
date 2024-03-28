@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from "@reduxjs/toolkit";
-import { thunk } from 'redux-thunk';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { ingredientsReducer } from "./reducers/ingredients";
 import { constructorReducer } from "./reducers/constructor";
 import { currentIngredientReducer } from "./reducers/currentIngredient";
@@ -10,7 +9,8 @@ import { profileChangeReducer } from './reducers/profile'
 import { registrationReducer } from "./reducers/registration"
 import { forgotPasswordReducer } from "./reducers/forgot-password"
 import { resetPasswordReducer } from "./reducers/reset-password"
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { wsReducer } from "./reducers/wsFeed"
+import { getOrderReducer } from "./reducers/getOrder"
 
 export const rootReducer = combineReducers({
     ingredientsReducer,
@@ -22,7 +22,11 @@ export const rootReducer = combineReducers({
     loginReducer,
     profileChangeReducer,
     forgotPasswordReducer,
-    resetPasswordReducer
+    resetPasswordReducer,
+    wsReducer,
+    getOrderReducer
 })
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export const store = configureStore({
+    reducer: rootReducer,
+});

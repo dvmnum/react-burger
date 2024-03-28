@@ -1,6 +1,12 @@
-import { REGISTER_FORM_SUBMIT, REGISTER_FORM_SUBMIT_FAILED, REGISTER_FORM_SUBMIT_SUCCESS, REGISTER_FORM_SET_VALUE } from "../actions/registration"
+import { TRegistrationActions } from "../actions/registration";
+import {
+    REGISTER_FORM_SET_VALUE,
+    REGISTER_FORM_SUBMIT,
+    REGISTER_FORM_SUBMIT_FAILED,
+    REGISTER_FORM_SUBMIT_SUCCESS
+} from "../constants";
 
-type TRegistration = {
+type TRegistrationState = {
     form: {
         email: string,
         password: string,
@@ -10,7 +16,7 @@ type TRegistration = {
     registrationFailed: boolean,
 }
 
-const initialState: TRegistration = {
+const initialState: TRegistrationState = {
     form: {
         email: '',
         password: '',
@@ -20,10 +26,11 @@ const initialState: TRegistration = {
     registrationFailed: false,
 }
 
-export const registrationReducer = (state = initialState, action: any) => {
+export const registrationReducer = (state = initialState, action: TRegistrationActions): TRegistrationState => {
     switch(action.type) {
         case REGISTER_FORM_SET_VALUE: {
             return {
+                ...state,
                 form: {
                     ...state.form,
                     [action.field]: action.value,

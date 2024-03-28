@@ -5,17 +5,13 @@ import styles from './BurgerIngredients.module.css';
 
 import IngredientListModule from '../IngredientListModule/IngredientListModule'
 import IngredientListItem from '../IngredientListItem/IngredientListItem'
-import { SET_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
-import { TIngredient } from '../BurgerConstructor/BurgerConstructor';
-import { useAppDispatch, useAppSelector } from '../../utils/dispatch';
-import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../utils/dispatch';
+import { TIngredient } from '../../services/types/data';
 
 const BurgerIngredients: React.FC = () => {
     const data = useAppSelector(store => store.ingredientsReducer.ingredients)
     const addedBun = useAppSelector(store => store.constructorReducer.bun)
     const addedIngredients = useAppSelector(store => store.constructorReducer.ingredients)
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
 
     const [current, setCurrent] = useState('buns');
 
@@ -48,7 +44,7 @@ const BurgerIngredients: React.FC = () => {
             </div>
             <div className={styles.ingredientsList} onScroll={onscroll}>
                 <IngredientListModule title='Булки'>
-                    {buns.map((product: TIngredient, index: number) =>
+                    {buns.map((product: TIngredient) =>
                         <IngredientListItem
                             key={product._id}
                             data={product}
@@ -58,7 +54,7 @@ const BurgerIngredients: React.FC = () => {
                     )}
                 </IngredientListModule>
                 <IngredientListModule title='Соусы'>
-                    {sauces.map((product: TIngredient, index: number) =>
+                    {sauces.map((product: TIngredient) =>
                         <IngredientListItem
                             key={product._id}
                             data={product}
@@ -68,7 +64,7 @@ const BurgerIngredients: React.FC = () => {
                     )}
                 </IngredientListModule>
                 <IngredientListModule title='Начинки'>
-                    {mains.map((product: TIngredient, index: number) =>
+                    {mains.map((product: TIngredient) =>
                         <IngredientListItem
                             key={product._id}
                             data={product}

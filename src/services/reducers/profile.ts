@@ -1,6 +1,14 @@
-import { PROFILE_FORM_SUBMIT, PROFILE_FORM_SUBMIT_FAILED, PROFILE_FORM_SUBMIT_SUCCESS, PROFILE_FORM_SET_VALUE, PROFILE_LOGOUT_SUCCESS, PROFILE_LOGOUT_FAILED } from "../actions/profile"
+import { TProfileActions } from "../actions/profile";
+import {
+    PROFILE_FORM_SET_VALUE,
+    PROFILE_FORM_SUBMIT,
+    PROFILE_FORM_SUBMIT_FAILED,
+    PROFILE_FORM_SUBMIT_SUCCESS,
+    PROFILE_LOGOUT_FAILED,
+    PROFILE_LOGOUT_SUCCESS
+} from "../constants";
 
-type TProfileChange = {
+type TProfileState = {
     form: {
         email: string,
         password: string,
@@ -11,7 +19,7 @@ type TProfileChange = {
     profileChangeFailed: boolean,
 }
 
-const initialState: TProfileChange = {
+const initialState: TProfileState = {
     form: {
         email: '',
         password: '',
@@ -22,7 +30,7 @@ const initialState: TProfileChange = {
     profileChangeFailed: false,
 }
 
-export const profileChangeReducer = (state = initialState, action: any) => {
+export const profileChangeReducer = (state = initialState, action: TProfileActions): TProfileState => {
     switch(action.type) {
         case PROFILE_FORM_SET_VALUE: {
             return {

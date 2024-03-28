@@ -29,12 +29,12 @@ const Modal: React.FC<ModalProps> = ({ title, onClose, children }) => {
     return createPortal(
         <ModalOverlay onClick={onClose}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
-                <div className={styles.header}>
-                    {title &&
+                <CloseIcon type="primary" onClick={onClose}/>
+                {title &&
+                    <div className={styles.header}>
                         <p className='text text_type_main-large'>{title}</p>
-                    }
-                    <CloseIcon type="primary" onClick={onClose}/>
-                </div>
+                    </div>
+                }
                 <div className={styles.body}>
                     {children && children}
                 </div>

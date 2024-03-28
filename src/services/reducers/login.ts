@@ -1,6 +1,12 @@
-import { LOGIN_FORM_SET_VALUE, LOGIN_FORM_SUBMIT, LOGIN_FORM_SUBMIT_FAILED, LOGIN_FORM_SUBMIT_SUCCESS } from "../actions/login"
+import { TLoginActions } from "../actions/login"
+import {
+    LOGIN_FORM_SET_VALUE,
+    LOGIN_FORM_SUBMIT,
+    LOGIN_FORM_SUBMIT_FAILED,
+    LOGIN_FORM_SUBMIT_SUCCESS
+} from "../constants"
 
-type TLogin = {
+type TLoginState = {
     form: {
         email: string,
         password: string,
@@ -10,7 +16,7 @@ type TLogin = {
     loginFailed: boolean,
 }
 
-const initialState: TLogin = {
+const initialState: TLoginState = {
     form: {
         email: '',
         password: '',
@@ -20,7 +26,7 @@ const initialState: TLogin = {
     loginFailed: false,
 }
 
-export const loginReducer = (state = initialState, action: any) => {
+export const loginReducer = (state = initialState, action: TLoginActions): TLoginState => {
     switch(action.type) {
         case LOGIN_FORM_SET_VALUE: {
             return {

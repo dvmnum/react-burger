@@ -1,16 +1,41 @@
+import { AppThunk } from "../../utils/dispatch";
 import { fetchWithRefresh } from "../../utils/request"
+import {
+    PASSWORD_RESET_SET_VALUE,
+    PASSWORD_RESET_SUBMIT,
+    PASSWORD_RESET_SUBMIT_FAILED,
+    PASSWORD_RESET_SUBMIT_SUCCESS
+} from "../constants";
 
-export const PASSWORD_RESET_SET_VALUE = 'PASSWORD_FORGOT_SET_EMAIL'
-export const PASSWORD_RESET_SUBMIT = 'PASSWORD_FORGOT_SUBMIT'
-export const PASSWORD_RESET_SUBMIT_SUCCESS = 'PASSWORD_FORGOT_SUBMIT_SUCCESS'
-export const PASSWORD_RESET_SUBMIT_FAILED = 'PASSWORD_FORGOT_SUBMIT_FAILED'
+export interface IPRSetValue {
+    readonly type: typeof PASSWORD_RESET_SET_VALUE
+    readonly field: string
+    readonly value: string
+}
+
+export interface IPRSubmit {
+    readonly type: typeof PASSWORD_RESET_SUBMIT
+}
+
+export interface IPRFailed {
+    readonly type: typeof PASSWORD_RESET_SUBMIT_FAILED
+}
+
+export interface IPRSuccess {
+    readonly type: typeof PASSWORD_RESET_SUBMIT_SUCCESS
+}
+
+export type TResetPasswordActions = 
+    | IPRSetValue
+    | IPRSubmit
+    | IPRFailed
+    | IPRSuccess
 
 export const setPasswordResetValue = (field: string, value: string) => ({
     type: PASSWORD_RESET_SET_VALUE, field, value
 })
 
-//@ts-ignore
-export const passwordReset = () => (dispatch, getState) => {
+export const passwordReset = (): AppThunk => (dispatch, getState) => {
     dispatch({ type: PASSWORD_RESET_SUBMIT });
     fetchWithRefresh('password-reset/reset', {
         method: 'POST',

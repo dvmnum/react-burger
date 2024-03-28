@@ -11,7 +11,7 @@ export const ProfilePage: React.FC = () => {
     }
 
     return (
-        <div className={`${styles.profile} mt-30`}>
+        <div className={`${styles.profile} pt-30`}>
             <nav className={styles.nav}>
                 <NavLink to='' end className={({isActive}) => isActive ? `${styles.link} ${styles.activeLink} text text_type_main-medium` : `${styles.link} text text_type_main-medium text_color_inactive`}>
                     Профиль

@@ -1,41 +1,48 @@
-import { NORMA_API } from "../../utils/burger-api"
-import { User, api } from "../../utils/request"
+import { AppThunk } from "../../utils/dispatch";
+import { getUser } from "../../utils/request"
+import {
+    SET_AUTH_CHECKED,
+    SET_USER
+} from "../constants"
+import { User } from "../types/data"
 
-export const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED'
-export const SET_USER = 'SET_USER'
+export interface ISetAuthChecked {
+    readonly type: typeof SET_AUTH_CHECKED;
+    readonly payload: boolean;
+}
 
-export const setAuthChecked = (value: boolean) => ({
+export interface ISetUser {
+    readonly type: typeof SET_USER;
+    readonly payload: User | null
+}
+
+export type TCheckAuthActions = 
+    | ISetAuthChecked
+    | ISetUser
+
+export const setAuthChecked = (value: boolean): ISetAuthChecked => ({
     type: SET_AUTH_CHECKED,
     payload: value
 })
 
-export const setUser = (value: User | null) => ({
+export const setUser = (value: User | null): ISetUser => ({
     type: SET_USER,
     payload: value
 })
 
-export const getUser = () => {
-    // @ts-ignore
-    return (dispatch) => {
-        return api.getUser().then((res: any) => {
-            dispatch(setUser(res.user))
-        })
-    }
-}
-
-export const checkUserAuth = () => {
-    // @ts-ignore
-    return (dispatch) => {
-        if (localStorage.getItem('accessToken')) {
-            dispatch(getUser())
-                .catch(() => {
-                    localStorage.removeItem('accessToken')
-                    localStorage.removeItem('refreshToken')
-                    dispatch(setUser(null))
-                })
-                .finally(() => dispatch(setAuthChecked(true)))
-        } else {
-            dispatch(setAuthChecked(true))
-        }
+export const checkUserAuth = (): AppThunk => (dispatch) => {
+    if (localStorage.getItem('accessToken')) {
+        return getUser()
+            .then((res: any) => {
+                dispatch(setUser(res.user))
+            })
+            .catch(() => {
+                localStorage.removeItem('accessToken')
+                localStorage.removeItem('refreshToken')
+                dispatch(setUser(null))
+            })
+            .finally(() => dispatch(setAuthChecked(true)))
+    } else {
+        dispatch(setAuthChecked(true))
     }
 }

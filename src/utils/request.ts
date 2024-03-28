@@ -1,12 +1,19 @@
-import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS } from "../services/actions/ingredients";
+import { IIngredientsSuccess } from "../services/actions/ingredients";
+import {
+    GET_INGREDIENTS_FAILED,
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS
+} from "../services/constants";
+import { TIngredient, User } from "../services/types/data";
 import { NORMA_API } from "./burger-api";
+import { AppThunk } from "./dispatch";
 
 type TServerResponse<T> = {
     success: boolean;
 } & T;
 
 export type TIngredientsResponse = TServerResponse<{
-    data: string[]
+    data: TIngredient[]
 }>
 
 export const checkReponse = <T>(res: Response): Promise<T> => {
@@ -18,12 +25,11 @@ export const request = (endpoint: RequestInfo, options: any) => {
         .then(res => checkReponse(res))
 }
 
-// @ts-ignore
-export const getIngredients = () => (dispatch) => {
+export const getIngredients = (): AppThunk => (dispatch) => {
     dispatch({ type: GET_INGREDIENTS_REQUEST });
     fetch(`${NORMA_API}/ingredients`)
         .then(res => checkReponse<TIngredientsResponse>(res))
-        .then(res => dispatch({ type: GET_INGREDIENTS_SUCCESS, payload: res.data }))
+        .then(res => dispatch({ type: GET_INGREDIENTS_SUCCESS, payload: res.data } as IIngredientsSuccess))
         .catch(err => dispatch({ type: GET_INGREDIENTS_FAILED }))
 }
 
@@ -71,15 +77,9 @@ export const fetchWithRefresh = async<T> (endpoint: RequestInfo, options: any) =
     }
 };
 
-export type User = {
-    name: string,
-    email: string,
-    password?: string,
-}
-
 type TUser = TServerResponse<User>
 
-const getUser = () => {
+export const getUser = () => {
     return fetchWithRefresh<TUser>('auth/user', {
         method: 'GET',
         headers: {
@@ -88,5 +88,3 @@ const getUser = () => {
         },
     })
 }
-
-export const api = { getUser }
