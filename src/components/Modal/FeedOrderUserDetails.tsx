@@ -9,15 +9,15 @@ type FODProps = {
     drilledData?: any
 }
 
-export const FeedOrderDetails: React.FC<FODProps> = (drilledData) => {
-    const { status, feed } = useAppSelector(store => store.wsFeedReducer)
+export const FeedOrderUserDetails: React.FC<FODProps> = (drilledData) => {
+    const { status, feed } = useAppSelector(store => store.wsFeedUserReducer)
     const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
 
     let feed_number = useParams().number
 
     const data = !drilledData.drilledData && feed !== null ? feed.orders && feed.orders.filter((item: IFeedOrder) => item.number.toString() === feed_number)[0] : drilledData.drilledData
 
-    const itemPrice = data.ingredients
+    const itemPrice = data && data.ingredients
         .map((id: string) => ingredients.filter(ingredient => ingredient._id == id))
         .reduce((acc: number, item: TIngredient[]) => acc + item[0].price, 0)
 

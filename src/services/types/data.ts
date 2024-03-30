@@ -29,3 +29,20 @@ export type TConstructor = {
     bun: TIngredient | null,
     ingredients: TIngredient[]
 }
+
+export type IFeedOrder = {
+    ingredients: string[],
+    _id: string,
+    status: string,
+    number: number,
+    createdAt: string,
+    updatedAt: string,
+    name?: string
+}
+
+export type IFeed = {
+    success: boolean,
+    orders: IFeedOrder[],
+    total: number,
+    totalToday: number
+}

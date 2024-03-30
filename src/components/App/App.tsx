@@ -27,6 +27,7 @@ import { Orders } from '../../pages/profile/profile-orders';
 import { getIngredients } from '../../utils/request';
 import { useAppDispatch, useAppSelector } from "../../utils/dispatch";
 import { FeedOrderDetails } from "../Modal/FeedOrderDetails";
+import { FeedOrderUserDetails } from "../Modal/FeedOrderUserDetails";
 
 const App: React.FC = () => {
   const location = useLocation()
@@ -61,6 +62,7 @@ const App: React.FC = () => {
               <Route path='/profile' element={<OnlyAuth component={<ProfilePage />} />}>
                 <Route index element={<User />}/>
                 <Route path='orders' element={<Orders/>}/>
+                <Route path='orders/:number' element={<FeedOrderPage />} />
               </Route>
               <Route path="/feed" element={<FeedPage />} />
               <Route path="/feed/:number" element={<FeedOrderPage />} />
@@ -77,14 +79,14 @@ const App: React.FC = () => {
                     <IngredientDetails />
                   </Modal>
                 } />
-              </Routes>
-            )}
-
-            {state?.backgroundLocation && (
-              <Routes>
                 <Route path='/feed/:number' element={
                   <Modal onClose={closeModal}>
                     <FeedOrderDetails />
+                  </Modal>
+                } />
+                <Route path='/profile/orders/:number' element={
+                  <Modal onClose={closeModal}>
+                    <FeedOrderUserDetails />
                   </Modal>
                 } />
               </Routes>

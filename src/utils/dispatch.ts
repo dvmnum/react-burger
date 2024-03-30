@@ -12,22 +12,22 @@ import { TProfileActions } from "../services/actions/profile";
 import { TRegistrationActions } from "../services/actions/registration";
 import { TResetPasswordActions } from "../services/actions/reset-password";
 import { TIngredientsActions } from "../services/actions/ingredients";
-import { TFeedActions } from "../services/actions/wsFeed";
 import { TGetOrderActions } from "../services/actions/getOrder";
+import { TwsActions } from "../services/actions/wsActions";
 
 export type AppActions = 
-    | TCheckAuthActions
-    | TConstructorActions
-    | TCurrentIngredientActions
-    | TForgorPasswordActions
-    | TLoginActions
-    | TOrderActions
-    | TProfileActions
-    | TRegistrationActions
-    | TResetPasswordActions
-    | TIngredientsActions
-    | TFeedActions
-    | TGetOrderActions
+  | TCheckAuthActions
+  | TConstructorActions
+  | TCurrentIngredientActions
+  | TForgorPasswordActions
+  | TLoginActions
+  | TOrderActions
+  | TProfileActions
+  | TRegistrationActions
+  | TResetPasswordActions
+  | TIngredientsActions
+  | TGetOrderActions
+  | TwsActions
 
 export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch

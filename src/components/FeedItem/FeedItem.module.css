@@ -3,10 +3,6 @@
     border-radius: 40px;
     background-color: var(--background);
 
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-
     cursor: pointer;
     color: unset;
     text-decoration: none;
@@ -105,4 +101,8 @@ ul li:nth-child(6) {
     overflow: hidden;
 
     border: 2px solid transparent;
+}
+
+.done {
+    color: var(--colors-interface-success);
 }
