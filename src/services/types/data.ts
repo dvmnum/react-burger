@@ -37,7 +37,9 @@ export type IFeedOrder = {
     number: number,
     createdAt: string,
     updatedAt: string,
-    name?: string
+    name?: string,
+    owner?: string,
+    __v?: number
 }
 
 export type IFeed = {

@@ -15,7 +15,8 @@ export type TwsActionTypes = {
 
 export const socketMiddleware = (
     wsActions: TwsActionTypes,
-    withTokenRefresh: boolean
+    withTokenRefresh: boolean,
+    token: boolean
 ): Middleware<{}, RootState> => {
     return ((store) => {
       let socket: WebSocket | null = null;
@@ -23,12 +24,11 @@ export const socketMiddleware = (
   
       return next => (action) => {
         const { dispatch } = store;
-        
+        const token = localStorage.getItem('accessToken')?.replace('Bearer ', '')
+
         const {
             wsConnect,
             wsDisconnect,
-            wsSendMessage,
-            wsConnecting,
             onOpen,
             onClose,
             onError,
@@ -37,7 +37,7 @@ export const socketMiddleware = (
 
         if (wsConnect.match(action)) {
             url = action.payload
-            socket = new WebSocket(url);
+            socket = token ? new WebSocket(`${url}?token=${token}`) : new WebSocket(url)
         }
         if (socket) {
             socket.onopen = event => {

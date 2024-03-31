@@ -6,21 +6,17 @@ import { useEffect } from 'react';
 import { getOrder } from '../../services/actions/getOrder';
 
 export const FeedOrderPage: React.FC = () => {
-    const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
     const data = useAppSelector(store => store.getOrderReducer.order)
     const dispatch = useAppDispatch()
     const feed_number = useParams().number
 
     useEffect(() => {
         dispatch(getOrder(feed_number))
-
     }, [])
-    
-    // const data = ingredients.filter((item: TIngredient) => item._id === _id)[0]
-  
+      
     return (
         <div className={styles.page}>
-            {data && <FeedOrderDetails drilledData={data.orders[0]}/>}
+            {data && <FeedOrderDetails fetchedData={data.orders[0]}/>}
         </div>
     );
 }

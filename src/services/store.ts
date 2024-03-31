@@ -13,7 +13,6 @@ import { getOrderReducer } from "./reducers/getOrder"
 import { wsFeedReducer } from './reducers/wsReducer'
 import { wsFeedUserReducer } from './reducers/wsUserReducer'
 import { socketMiddleware } from "../utils/socketMiddleware";
-import { socketUserMiddleware } from "../utils/socketUserMiddleware";
 
 import {
     connect as FeedConnect,
@@ -71,8 +70,8 @@ export const rootReducer = combineReducers({
     wsFeedUserReducer
 })
 
-const mainFeed = socketMiddleware(wsActions, true)
-const userFeed = socketUserMiddleware(wsUserActions, true)
+const mainFeed = socketMiddleware(wsActions, false, false)
+const userFeed = socketMiddleware(wsUserActions, true, true)
 
 export const store = configureStore({
     reducer: rootReducer,

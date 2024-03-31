@@ -3,6 +3,7 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import { useAppSelector } from '../../utils/dispatch';
 import { Link, useLocation } from 'react-router-dom';
 import { IFeedOrder } from '../../services/types/data';
+import { useMemo } from 'react';
 
 type FIProps = {
     data: IFeedOrder,
@@ -14,9 +15,11 @@ const FeedItem: React.FC<FIProps> = ({ data, url }) => {
 
     const location = useLocation()
     
-    const itemPrice = data.ingredients
+    const itemPrice = useMemo(() => (
+        data.ingredients
         .map(id => ingredients.filter(ingredient => ingredient._id == id))
         .reduce((acc, item) => acc + item[0].price, 0)
+    ), [data]) 
 
     return (
         <Link
