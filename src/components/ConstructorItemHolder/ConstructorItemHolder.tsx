@@ -2,8 +2,8 @@ import styles from './ConstructorItemHolder.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
-import { TIngredient } from '../BurgerConstructor/BurgerConstructor';
 import { Identifier, XYCoord } from 'dnd-core';
+import { TIngredient } from '../../services/types/data';
 
 type CIHProps = {
     data: TIngredient,

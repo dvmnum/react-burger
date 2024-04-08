@@ -1,34 +1,43 @@
-import { TIngredient } from "../../components/BurgerConstructor/BurgerConstructor"
-import { SET_INGREDIENTS, ORDER_POST_REQUEST, ORDER_POST_SUCCESS, ORDER_POST_FAILED, CLOSE_ORDER } from "../actions/order"
+import { TOrderActions } from "../actions/order"
+import {
+    SET_INGREDIENTS,
+    ORDER_POST_REQUEST,
+    ORDER_POST_SUCCESS,
+    ORDER_POST_FAILED,
+    CLOSE_ORDER
+} from "../constants"
+import { TIngredient } from "../types/data"
 
-export type TOrder = {
-    ingredients: TIngredient[],
-    orderRequest: boolean,
-    orderFailed: boolean,
-    answer: {
-        success: boolean,
+export type TAnswer = {
+    success: boolean,
+    name: string,
+    order: {
+        ingredients: TIngredient,
+        _id: string,
+        owner: object,
         name: string,
-        order: {
-            ingredients: TIngredient,
-            _id: string,
-            owner: object,
-            name: string,
-            createdAt: object,
-            updatedAt: object,
-            number: number,
-            price: number
-        }
-    } | object
+        createdAt: object,
+        updatedAt: object,
+        number: number,
+        price: number
+    }
 }
 
-const initialState: TOrder = {
+export type TOrderState = {
+    ingredients: string[],
+    orderRequest: boolean,
+    orderFailed: boolean,
+    answer: TAnswer | object
+}
+
+const initialState: TOrderState = {
     ingredients: [],
     orderRequest: false,
     orderFailed: false,
     answer: {}
 }
 
-export const orderReducer = (state = initialState, action: any) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch(action.type) {
         case SET_INGREDIENTS: {
             return {
@@ -39,6 +48,7 @@ export const orderReducer = (state = initialState, action: any) => {
         case CLOSE_ORDER: {
             return {
                 ...state,
+                ingredients: [],
                 answer: {}
             }
         }

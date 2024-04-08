@@ -1,16 +1,40 @@
+import { AppThunk } from "../../utils/dispatch";
 import { fetchWithRefresh } from "../../utils/request"
+import {
+    PASSWORD_FORGOT_SET_EMAIL,
+    PASSWORD_FORGOT_SUBMIT,
+    PASSWORD_FORGOT_SUBMIT_FAILED,
+    PASSWORD_FORGOT_SUBMIT_SUCCESS
+} from "../constants";
 
-export const PASSWORD_FORGOT_SET_EMAIL = 'PASSWORD_FORGOT_SET_EMAIL'
-export const PASSWORD_FORGOT_SUBMIT = 'PASSWORD_FORGOT_SUBMIT'
-export const PASSWORD_FORGOT_SUBMIT_SUCCESS = 'PASSWORD_FORGOT_SUBMIT_SUCCESS'
-export const PASSWORD_FORGOT_SUBMIT_FAILED = 'PASSWORD_FORGOT_SUBMIT_FAILED'
+export interface IPFSetEmail {
+    readonly type: typeof PASSWORD_FORGOT_SET_EMAIL;
+    readonly value: string;
+}
 
-export const setPasswordForgotValue = (value: string) => ({
+export interface IPFSubmit {
+    readonly type: typeof PASSWORD_FORGOT_SUBMIT;
+}
+
+export interface IPFSuccess {
+    readonly type: typeof PASSWORD_FORGOT_SUBMIT_SUCCESS;
+}
+
+export interface IPFFailed {
+    readonly type: typeof PASSWORD_FORGOT_SUBMIT_FAILED;
+}
+
+export type TForgorPasswordActions = 
+    | IPFSetEmail
+    | IPFSubmit
+    | IPFSuccess
+    | IPFFailed
+
+export const setPasswordForgotValue = (value: string): IPFSetEmail => ({
     type: PASSWORD_FORGOT_SET_EMAIL, value
 })
 
-// @ts-ignore
-export const passwordForgot = () => (dispatch, getState) => {
+export const passwordForgot = (): AppThunk => (dispatch, getState) => {
     dispatch({ type: PASSWORD_FORGOT_SUBMIT });
     fetchWithRefresh('password-reset', {
         method: 'POST',
@@ -19,11 +43,11 @@ export const passwordForgot = () => (dispatch, getState) => {
             "Authorization": localStorage.getItem('accessToken'),
         }, 
         body: JSON.stringify(getState().forgotPasswordReducer.form)
-    }).then((res) => {
+    }).then(() => {
         dispatch({
             type: PASSWORD_FORGOT_SUBMIT_SUCCESS,
         });
-    }).catch(err => {
+    }).catch(() => {
         dispatch({
             type: PASSWORD_FORGOT_SUBMIT_FAILED,
         });

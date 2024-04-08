@@ -1,16 +1,12 @@
-import { TIngredient } from '../BurgerConstructor/BurgerConstructor'
 import modalStyles from '../Modal/Modal.module.css'
 import { useAppSelector } from '../../utils/dispatch'
 import { useParams } from 'react-router-dom'
+import { TIngredient } from '../../services/types/data'
 
 const textMain = 'text text_type_main-default text_color_inactive'
 const textDigits = 'text text_type_digits-default text_color_inactive'
 
-type IDProps = {
-    data: TIngredient
-}
-
-export const IngredientDetails: React.FC<IDProps> = () => {
+export const IngredientDetails: React.FC = () => {
     const ingredients = useAppSelector(store => store.ingredientsReducer.ingredients)
 
     let _id = useParams().id
@@ -19,7 +15,7 @@ export const IngredientDetails: React.FC<IDProps> = () => {
 
     return data && (
         <>
-            <img className={modalStyles.img} src={data.image_large as string} alt={data.name as string} />
+            <img className={modalStyles.img} src={data.image_large} alt={data.name} />
             <p className={`${modalStyles.p} text text_type_main-medium`}>{data.name}</p>
             <ul className={modalStyles.ul}>
                 <li className={modalStyles.li}>

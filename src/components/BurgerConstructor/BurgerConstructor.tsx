@@ -7,19 +7,23 @@ import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-de
 import ConstructorItemHolder from '../ConstructorItemHolder/ConstructorItemHolder'
 import Modal from '../Modal/Modal'
 import { useDrop } from 'react-dnd';
-import { ADD_BUN, ADD_INGREDIENT, CONSTRUCTOR_REORDER, DELETE_INGREDIENT, CLEAR_INGREDIENTS } from '../../services/actions/constructor';
+import {
+    ADD_BUN,
+    ADD_INGREDIENT,
+    CONSTRUCTOR_REORDER,
+    DELETE_INGREDIENT,
+    CLEAR_INGREDIENTS,
+    CLOSE_ORDER,
+} from '../../services/constants';
 
 import { v4 as uuid } from 'uuid';
 import PulseLoader from "react-spinners/PulseLoader";
 import { sendOrder, setValue } from '../../services/actions/order';
-import { CLOSE_ORDER } from '../../services/actions/order';
 import { OrderDetails } from '../Modal/OrderDetails';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../utils/dispatch';
-
-export type TIngredient = {
-    [name: string]: number | string
-}
+import { TIngredient } from '../../services/types/data';
+import { TAnswer } from '../../services/reducers/order';
 
 const BurgerConstructor: React.FC = () => {
     const bun = useAppSelector(state => state.constructorReducer.bun);
@@ -30,16 +34,19 @@ const BurgerConstructor: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
+    let orderValue: string[] = []
+
     useEffect(() => {
-        order['ingredients'] = []
-        bun && order['ingredients'].push(bun._id)
-        ingredients && order['ingredients'].push(...ingredients.map((ingredient: TIngredient) => ingredient._id))
-        bun && order['ingredients'].push(bun._id)
-    }, [ bun, ingredients, order ] )
+        bun && orderValue.push(bun._id)
+        for (let i = 0; i < ingredients.length; i++) {
+            orderValue.push(ingredients[i]._id)
+        }
+        bun && orderValue.push(bun._id)
+    }, [bun, ingredients])
     
     const totalPrice = useMemo(() => (
-        (bun ? (bun.price as number) * 2 : 0) +
-        (ingredients.length ? ingredients.reduce((acc: number, item: TIngredient) => typeof item.price === 'number' && acc + item.price, 0) : 0))
+        (bun ? bun.price * 2 : 0) +
+        (ingredients.length ? ingredients.reduce((acc: number, item: TIngredient) => acc + item.price, 0) : 0))
         .toFixed(0),
     [ bun, ingredients ]);
 
@@ -87,8 +94,8 @@ const BurgerConstructor: React.FC = () => {
 
     const getOrderNumber = () => {
         if (localStorage.accessToken) {
-            dispatch(setValue(order['ingredients']))
-            dispatch(sendOrder(order))
+            dispatch(setValue(orderValue))
+            dispatch(sendOrder())
             dispatch({ type: CLEAR_INGREDIENTS })
         } else {
             navigate('/login')
@@ -101,12 +108,13 @@ const BurgerConstructor: React.FC = () => {
 
     const closeModal = () => {
         dispatch({ type: CLOSE_ORDER })
+        orderValue = []
     }
 
-    const modal = (order.orderRequest || answer.order) && (
+    const modal = (order.orderRequest || (answer as TAnswer).order) && (
         <Modal onClose={closeModal}>
-            {answer.order ?
-                <OrderDetails number={answer.order.number}/>
+            {(answer as TAnswer).order ?
+                <OrderDetails number={(answer as TAnswer).order.number}/>
                 : <PulseLoader className={pulseStyles.pulse} color="#36d7b7"/> 
             }
         </Modal>

@@ -19,7 +19,7 @@ const AppHeader: React.FC = () => {
                             </>
                         )}
                     </NavLink>
-                    <NavLink to='list' className={({isActive}) => isActive ? `${headerStyles.link} pt-4 pb-4 pr-5 pl-5 active` : `${headerStyles.link} pt-4 pb-4 pr-5 pl-5`}>
+                    <NavLink to='feed' className={({isActive}) => isActive ? `${headerStyles.link} pt-4 pb-4 pr-5 pl-5 active` : `${headerStyles.link} pt-4 pb-4 pr-5 pl-5`}>
                         {({isActive}) => (
                             <>
                                 <ListIcon type={isActive ? 'primary' : 'secondary'}/>

@@ -1,21 +1,62 @@
+import { AppThunk } from "../../utils/dispatch";
 import { fetchWithRefresh } from "../../utils/request"
+import {
+    PROFILE_FORM_SET_VALUE,
+    PROFILE_FORM_SUBMIT,
+    PROFILE_FORM_SUBMIT_FAILED,
+    PROFILE_FORM_SUBMIT_SUCCESS,
+    PROFILE_LOGOUT_FAILED,
+    PROFILE_LOGOUT_SUCCESS
+} from "../constants";
 import { setUser } from "./checkAuth"
 
-export const PROFILE_FORM_SET_VALUE = 'PROFILE_FORM_SET_VALUE'
-export const PROFILE_FORM_SUBMIT = 'PROFILE_FORM_SUBMIT'
-export const PROFILE_FORM_SUBMIT_SUCCESS = 'PROFILE_FORM_SUBMIT_SUCCESS'
-export const PROFILE_FORM_SUBMIT_FAILED = 'PROFILE_FORM_SUBMIT_FAILED'
+export interface IPFSetValue {
+    readonly type: typeof PROFILE_FORM_SET_VALUE;
+    readonly field: string;
+    readonly value: string;
+}
 
-export const PROFILE_LOGOUT_SUCCESS = 'PROFILE_LOGOUT_SUCCESS'
-export const PROFILE_LOGOUT_FAILED = 'PROFILE_LOGOUT_FAILED'
+export interface IPFSubmit {
+    readonly type: typeof PROFILE_FORM_SUBMIT
+}
+
+export interface IPFFailed {
+    readonly type: typeof PROFILE_FORM_SUBMIT_FAILED
+}
+
+export interface IPFSuccess {
+    readonly type: typeof PROFILE_FORM_SUBMIT_SUCCESS;
+    readonly payload: {
+        user: {
+            email: string,
+            password: string,
+            name: string
+        }
+    }
+}
+
+export interface IPLogoutFailed {
+    readonly type: typeof PROFILE_LOGOUT_FAILED
+}
+
+export interface IPLogoutSuccess {
+    readonly type: typeof PROFILE_LOGOUT_SUCCESS
+}
+
+export type TProfileActions = 
+    | IPFSetValue
+    | IPFSubmit
+    | IPFFailed
+    | IPFSuccess
+    | IPLogoutFailed
+    | IPLogoutSuccess
 
 
-export const setProfileValue = (field: string, value: string) => ({
+export const setProfileValue = (field: string, value: string): IPFSetValue => ({
     type: PROFILE_FORM_SET_VALUE, field, value
 })
 
-//@ts-ignore
-export const profileChange = () => (dispatch, getState) => {
+export const profileChange = (): AppThunk => (dispatch, getState) => {
     dispatch({ type: PROFILE_FORM_SUBMIT });
     fetchWithRefresh('auth/user', {
         method: 'PATCH',
@@ -28,7 +69,7 @@ export const profileChange = () => (dispatch, getState) => {
         dispatch({
             type: PROFILE_FORM_SUBMIT_SUCCESS,
             payload: data
-        });
+        } as IPFSuccess);
     }).catch(err => {
         dispatch({
             type: PROFILE_FORM_SUBMIT_FAILED,
@@ -36,8 +77,7 @@ export const profileChange = () => (dispatch, getState) => {
     })
 }
 
-//@ts-ignore
-export const profileGet = () => (dispatch, getState) => {
+export const profileGet = (): AppThunk => (dispatch, getState) => {
     dispatch({ type: PROFILE_FORM_SUBMIT });
     fetchWithRefresh('auth/user', {
         method: 'GET',
@@ -49,7 +89,7 @@ export const profileGet = () => (dispatch, getState) => {
         dispatch({
             type: PROFILE_FORM_SUBMIT_SUCCESS,
             payload: data
-        });
+        } as IPFSuccess);
     }).catch(err => {
         dispatch({
             type: PROFILE_FORM_SUBMIT_FAILED,
@@ -57,8 +97,7 @@ export const profileGet = () => (dispatch, getState) => {
     })
 }
 
-//@ts-ignore
-export const logOut = () => (dispatch, getState) => {
+export const logOut = (): AppThunk => (dispatch, getState) => {
     fetchWithRefresh('auth/logout', {
         method: 'POST',
         headers: {

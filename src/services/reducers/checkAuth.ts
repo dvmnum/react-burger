@@ -1,18 +1,13 @@
-import { Action } from "@reduxjs/toolkit"
-import { SET_AUTH_CHECKED, SET_USER } from "../actions/checkAuth"
-import { User } from "../../utils/request"
-
-type TAuth = {
-    user: User | null,
-    isAuthChecked: boolean
-}
+import { TCheckAuthActions } from "../actions/checkAuth"
+import { SET_AUTH_CHECKED, SET_USER } from "../constants"
+import { TAuth } from "../types/data"
 
 const initialState: TAuth = {
     user: null,
     isAuthChecked: false
 }
 
-export const authReducer = (state = initialState, action: any) => {
+export const authReducer = (state = initialState, action: TCheckAuthActions): TAuth => {
     switch(action.type) {
         case SET_USER: {
             return {

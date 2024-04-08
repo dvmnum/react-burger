@@ -1,5 +1,10 @@
-import { TIngredient } from "../../components/BurgerConstructor/BurgerConstructor";
-import { GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS } from "../actions/ingredients";
+import { TIngredientsActions } from "../actions/ingredients";
+import {
+    GET_INGREDIENTS_FAILED,
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS
+} from "../constants";
+import { TIngredient } from "../types/data";
 
 type TIngredients = {
     ingredients: TIngredient[],
@@ -7,19 +12,13 @@ type TIngredients = {
     hasError: boolean
 }
 
-type TIngredientsReducer = (
-    state: TIngredients,
-    action: any
-) => TIngredients
-
-
-const initialState = {
+const initialState: TIngredients = {
     ingredients: [],
     isLoading: false,
     hasError: false
 }
 
-export const ingredientsReducer: TIngredientsReducer = (state = initialState, action: any) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredients => {
     switch (action.type) {
         case (GET_INGREDIENTS_REQUEST): {
             return {

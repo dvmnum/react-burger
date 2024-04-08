@@ -1,17 +1,19 @@
-import { TIngredient } from "../../components/BurgerConstructor/BurgerConstructor"
-import { ADD_BUN, ADD_INGREDIENT, DELETE_INGREDIENT, CONSTRUCTOR_REORDER, CLEAR_INGREDIENTS } from "../actions/constructor"
-
-type TConstructor = {
-    bun: TIngredient | null,
-    ingredients: TIngredient[] | []
-}
+import { TConstructorActions } from "../actions/constructor";
+import { 
+    ADD_BUN,
+    ADD_INGREDIENT,
+    DELETE_INGREDIENT,
+    CONSTRUCTOR_REORDER,
+    CLEAR_INGREDIENTS
+} from "../constants"
+import { TConstructor } from "../types/data";
 
 const initialState: TConstructor = {
     bun: null,
     ingredients: [],
 }
 
-export const constructorReducer = (state = initialState, action: any) => {
+export const constructorReducer = (state = initialState, action: TConstructorActions): TConstructor => {
     switch (action.type) {
         case (ADD_INGREDIENT): {
             return {
@@ -36,7 +38,7 @@ export const constructorReducer = (state = initialState, action: any) => {
         case (ADD_BUN): {
             return {
                 ...state,
-                bun: action.payload as TIngredient
+                bun: action.payload
             }
         }
         case (CONSTRUCTOR_REORDER): {

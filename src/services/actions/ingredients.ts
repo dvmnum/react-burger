@@ -1,13 +1,24 @@
-// import { request } from "../../utils/request"
+import {
+    GET_INGREDIENTS_FAILED,
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS
+} from "../constants";
+import { TIngredient } from "../types/data";
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST'
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS'
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED'
+export interface IIngredientsRequest {
+    readonly type: typeof GET_INGREDIENTS_REQUEST
+}
 
-// export const getIngredients = () => (dispatch) => {
-//     dispatch({ type: GET_INGREDIENTS_REQUEST });
-//     fetch(`${NORMA_API}/ingredients`)
-//         .then(res => checkReponse(res))
-//         .then(res => dispatch({ type: GET_INGREDIENTS_SUCCESS, payload: res.data }))
-//         .catch(err => dispatch({ type: GET_INGREDIENTS_FAILED }))
-// }
+export interface IIngredientsSuccess {
+    readonly type: typeof GET_INGREDIENTS_SUCCESS
+    readonly payload: Array<TIngredient>
+}
+
+export interface IIngredientsFailed {
+    readonly type: typeof GET_INGREDIENTS_FAILED
+}
+
+export type TIngredientsActions = 
+    | IIngredientsRequest
+    | IIngredientsSuccess
+    | IIngredientsFailed
