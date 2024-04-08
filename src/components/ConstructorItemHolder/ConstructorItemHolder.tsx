@@ -74,7 +74,7 @@ const ConstructorItemHolder: React.FC<CIHProps> = ({ data, index, handleClose, m
     drag(drop(ref))
 
     return (
-        <div className={styles.holder} ref={ref} data-handler-id={handlerId} style={{ opacity: isDragging ? 0.5 : 1 }}>
+        <div className={styles.holder} ref={ref} data-handler-id={handlerId} style={{ opacity: isDragging ? 0.5 : 1 }} data-testid='dropped_item'>
             <DragIcon type="primary" />
             <ConstructorElement
                 text={data.name as string}

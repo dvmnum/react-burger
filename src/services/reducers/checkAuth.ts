@@ -2,7 +2,7 @@ import { TCheckAuthActions } from "../actions/checkAuth"
 import { SET_AUTH_CHECKED, SET_USER } from "../constants"
 import { TAuth } from "../types/data"
 
-const initialState: TAuth = {
+export const initialState: TAuth = {
     user: null,
     isAuthChecked: false
 }

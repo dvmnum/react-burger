@@ -16,7 +16,7 @@ export const IngredientDetails: React.FC = () => {
     return data && (
         <>
             <img className={modalStyles.img} src={data.image_large} alt={data.name} />
-            <p className={`${modalStyles.p} text text_type_main-medium`}>{data.name}</p>
+            <p className={`${modalStyles.p} text text_type_main-medium`} data-testid='ingredient_name'>{data.name}</p>
             <ul className={modalStyles.ul}>
                 <li className={modalStyles.li}>
                     <p className={textMain}>Калории, ккал</p>

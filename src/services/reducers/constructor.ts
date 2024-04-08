@@ -8,7 +8,7 @@ import {
 } from "../constants"
 import { TConstructor } from "../types/data";
 
-const initialState: TConstructor = {
+export const initialState: TConstructor = {
     bun: null,
     ingredients: [],
 }

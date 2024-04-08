@@ -11,7 +11,7 @@ type TGetOrder = {
     hasError: boolean,
 }
 
-const initialState: TGetOrder = {
+export const initialState: TGetOrder = {
     order: null,
     isLoading: false,
     hasError: false

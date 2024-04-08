@@ -15,7 +15,7 @@ export type wsReducerState = {
     feed: IFeed | null
 }
 
-const initialState: wsReducerState = {
+export const initialState: wsReducerState = {
     status: WebsocketStatus.OFFLINE,
     connectingError: '',
     feed: null

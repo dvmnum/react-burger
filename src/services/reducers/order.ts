@@ -30,7 +30,7 @@ export type TOrderState = {
     answer: TAnswer | object
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
     ingredients: [],
     orderRequest: false,
     orderFailed: false,
