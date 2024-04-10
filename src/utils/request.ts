@@ -17,7 +17,7 @@ export type TIngredientsResponse = TServerResponse<{
 }>
 
 export const checkReponse = <T>(res: Response): Promise<T> => {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 };
 
 export const request = (endpoint: RequestInfo, options: any) => {

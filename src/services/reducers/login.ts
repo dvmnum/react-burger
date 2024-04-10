@@ -16,7 +16,7 @@ type TLoginState = {
     loginFailed: boolean,
 }
 
-const initialState: TLoginState = {
+export const initialState: TLoginState = {
     form: {
         email: '',
         password: '',

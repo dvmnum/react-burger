@@ -123,7 +123,7 @@ const BurgerConstructor: React.FC = () => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.burgerConstructor}>
-                <div className={styles.top} ref={dropBun}>
+                <div className={styles.top} ref={dropBun} data-testid='constructor_top'>
                     {!bun && <div className={`${styles.head} text text_type_main-default text_color_inactive`} style={{ boxShadow: isHoverBottom || isHoverTop ? '0 0 0 1px var(--colors-interface-accent) inset' : '' }} >Выберите булки</div> }
                     {bun &&
                         <ConstructorElement
@@ -136,7 +136,7 @@ const BurgerConstructor: React.FC = () => {
                         />
                     }
                 </div>
-                <div className={`${styles.inner} mt-4 mb-4`} ref={dropIngredient}>
+                <div className={`${styles.inner} mt-4 mb-4`} ref={dropIngredient} data-testid='constructor_middle'>
                     {!ingredients.length && <div className={`${styles.body} text text_type_main-default text_color_inactive`} style={{ boxShadow: isHoverIngredient ? '0 0 0 1px var(--colors-interface-accent) inset' : '' }}>Выберите начинку</div> }
                     {ingredients.map((ingredient: TIngredient, index: number) =>
                         <ConstructorItemHolder
@@ -149,7 +149,7 @@ const BurgerConstructor: React.FC = () => {
                         />)
                     }
                 </div>
-                <div className={styles.bottom} ref={dropBun1}>
+                <div className={styles.bottom} ref={dropBun1} data-testid='constructor_bottom'>
                     {!bun && <div className={`${styles.foot} text text_type_main-default text_color_inactive`} style={{ boxShadow: isHoverBottom || isHoverTop ? '0 0 0 1px var(--colors-interface-accent) inset' : '' }}>Выберите булки</div> }
                     {bun &&
                         <ConstructorElement
@@ -166,7 +166,7 @@ const BurgerConstructor: React.FC = () => {
             <div className={`${styles.order} mt-10`}>
                 <p className='text text_type_digits-medium mr-2'>{totalPrice}</p>
                 <CurrencyIcon type='primary' />
-                <Button htmlType="button" type="primary" size="large" extraClass='ml-10' onClick={getOrderNumber} disabled={ bun ? false : true }>Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="large" extraClass='ml-10' onClick={getOrderNumber} disabled={ bun ? false : true } data-testid='order_button'>Оформить заказ</Button>
                 {modal}
             </div>
         </div>

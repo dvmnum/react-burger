@@ -48,6 +48,7 @@ export const LoginPage: React.FC = () => {
                     errorText={'Ошибка'}
                     size={'default'}
                     autoComplete={'email'}
+                    data-testid='email_input'
                 />
                 <Input
                     type={inputType.input as 'password'}
@@ -61,12 +62,14 @@ export const LoginPage: React.FC = () => {
                     errorText={'Ошибка'}
                     size={'default'}
                     autoComplete={'password'}
+                    data-testid='password_input'
                 />
                 <Button
                     htmlType="submit"
                     type="primary"
                     size="medium"
                     extraClass={styles.button}
+                    data-testid='submit_button'
                 >
                     Войти
                 </Button>

@@ -1,7 +1,8 @@
 {
   "name": "react-burger",
   "version": "0.1.0",
-  "private": true,
+  "homepage": "https://dvmnum.github.io/react-burger",
+  "private": false,
   "dependencies": {
     "@reduxjs/toolkit": "^2.1.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -33,7 +34,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress": "npx cypress open",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -54,7 +58,9 @@
     ]
   },
   "devDependencies": {
+    "cypress": "^13.7.2",
     "dnd-core": "^16.0.1",
+    "gh-pages": "^6.1.1",
     "redux-devtools-extension": "^2.13.9"
   }
 }

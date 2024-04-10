@@ -16,7 +16,7 @@ type TRegistrationState = {
     registrationFailed: boolean,
 }
 
-const initialState: TRegistrationState = {
+export const initialState: TRegistrationState = {
     form: {
         email: '',
         password: '',

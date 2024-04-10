@@ -14,18 +14,18 @@ type TProfileState = {
         password: string,
         name: string,
     },
-    logOut: boolean,
+    logOutFailed: boolean,
     profileChangeRequest: boolean,
     profileChangeFailed: boolean,
 }
 
-const initialState: TProfileState = {
+export const initialState: TProfileState = {
     form: {
         email: '',
         password: '',
         name: '',
     },
-    logOut: false,
+    logOutFailed: false,
     profileChangeRequest: false,
     profileChangeFailed: false,
 }
@@ -78,7 +78,8 @@ export const profileChangeReducer = (state = initialState, action: TProfileActio
         }
         case PROFILE_LOGOUT_FAILED: {
             return {
-                ...state
+                ...state,
+                logOutFailed: true
             }
         }
         default: {
